@@ -1,0 +1,47 @@
+name: Collect News
+
+on:
+  # Run every day at 08:00 UTC
+  schedule:
+    - cron: "0 8 * * *"
+
+  # Allow manual trigger from the GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      config_path:
+        description: "Path to config file (relative to repo root)"
+        required: false
+        default: "config/config.yaml"
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Collect news
+        run: |
+          CONFIG="${{ github.event.inputs.config_path || 'config/config.yaml' }}"
+          python src/collector.py "$CONFIG"
+
+      - name: Commit and push digest
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/
+          # Only commit if there are staged changes
+          git diff --staged --quiet || \
+            git commit -m "📰 Daily news digest $(date -u +'%Y-%m-%d')"
+          git push

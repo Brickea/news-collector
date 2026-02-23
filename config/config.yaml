@@ -1,0 +1,128 @@
+# News Collector Configuration
+# ============================================================
+# Edit this file to customize which news types and sources are
+# collected, how output is stored, and how archiving works.
+
+# ------------------------------------------------------------
+# News categories to collect.
+# Only sources tagged with at least one of these categories
+# will be fetched. Remove a category to skip its sources.
+# ------------------------------------------------------------
+categories:
+  - technology
+  - business
+  - world
+  - health
+  - science
+
+# ------------------------------------------------------------
+# News sources.
+# Each entry must include:
+#   name     - display name used as a section header
+#   type     - "rss" (Twitter/X support via nitter RSS is noted
+#              in README; other types can be added later)
+#   url      - feed URL
+#   categories - list of categories this source covers
+#   enabled  - set to false to skip without deleting the entry
+#   max_items - (optional) override global max_items_per_source
+# ------------------------------------------------------------
+sources:
+  # --- World / General -----------------------------------------------
+  - name: BBC News
+    type: rss
+    url: https://feeds.bbci.co.uk/news/rss.xml
+    categories: [world]
+    enabled: true
+
+  - name: Reuters
+    type: rss
+    url: https://feeds.reuters.com/reuters/topNews
+    categories: [world, business]
+    enabled: true
+
+  - name: CNN Top Stories
+    type: rss
+    url: http://rss.cnn.com/rss/cnn_topstories.rss
+    categories: [world, business]
+    enabled: true
+
+  - name: Associated Press
+    type: rss
+    url: https://feeds.apnews.com/apnews/topnews
+    categories: [world]
+    enabled: true
+
+  # --- Technology ---------------------------------------------------
+  - name: TechCrunch
+    type: rss
+    url: https://techcrunch.com/feed/
+    categories: [technology]
+    enabled: true
+
+  - name: The Verge
+    type: rss
+    url: https://www.theverge.com/rss/index.xml
+    categories: [technology]
+    enabled: true
+
+  - name: Hacker News (Top)
+    type: rss
+    url: https://hnrss.org/frontpage
+    categories: [technology]
+    enabled: true
+
+  # --- Business -----------------------------------------------------
+  - name: Financial Times
+    type: rss
+    url: https://www.ft.com/rss/home
+    categories: [business]
+    enabled: true
+
+  # --- Health -------------------------------------------------------
+  - name: WHO News
+    type: rss
+    url: https://www.who.int/rss-feeds/news-english.xml
+    categories: [health]
+    enabled: true
+
+  # --- Science ------------------------------------------------------
+  - name: NASA Breaking News
+    type: rss
+    url: https://www.nasa.gov/rss/dyn/breaking_news.rss
+    categories: [science]
+    enabled: true
+
+  # --- Social (X / Twitter via Nitter RSS) --------------------------
+  # Uncomment and set a valid Nitter instance to follow X/Twitter accounts.
+  # See README for details on Nitter RSS.
+  #
+  # - name: "X: @NASA"
+  #   type: rss
+  #   url: https://nitter.net/NASA/rss
+  #   categories: [science]
+  #   enabled: true
+
+# ------------------------------------------------------------
+# Output settings
+# ------------------------------------------------------------
+output:
+  # Directory where today's digest is written
+  dir: docs
+  # Sub-directory used for archived digests
+  archive_dir: docs/archive
+  # Maximum articles fetched per source (can be overridden per source)
+  max_items_per_source: 10
+
+# ------------------------------------------------------------
+# Archive settings
+# Old digest files (any date before today) found in output.dir
+# are moved to output.archive_dir/<format>/ on each run.
+# ------------------------------------------------------------
+archive:
+  # Set to false to keep all files flat in output.dir
+  enabled: true
+  # strftime format string for the archive sub-directory.
+  # Examples:
+  #   "%Y/%m"  -> docs/archive/2024/03/
+  #   "%Y"     -> docs/archive/2024/
+  format: "%Y/%m"
