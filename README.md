@@ -108,11 +108,49 @@ The workflow file `.github/workflows/collect-news.yml` runs the collector
 automatically:
 
 * **Scheduled** – every day at **08:00 UTC**.
-* **Manual** – trigger *workflow_dispatch* from the GitHub Actions UI;
-  you can optionally supply a custom config path.
+* **Manual** – trigger *workflow_dispatch* from the GitHub Actions UI at any
+  time with optional overrides (see below).
 
 After a successful run the generated/archived files are committed back to the
 repository with the message `📰 Daily news digest YYYY-MM-DD`.
+
+### Manually triggering a collection run
+
+1. Open the repository on GitHub.
+2. Click **Actions** → **Collect News** → **Run workflow**.
+3. Fill in the optional inputs:
+
+| Input | Description | Example |
+|-------|-------------|---------|
+| `config_path` | Path to the config YAML (relative to the repo root). | `config/config.yaml` |
+| `categories` | Comma-separated list of categories to collect. Leave empty to use the categories defined in the config file. | `technology,world` |
+
+4. Click **Run workflow**.
+
+You can also use the [GitHub CLI](https://cli.github.com/):
+
+```bash
+# Run with default config
+gh workflow run collect-news.yml
+
+# Override categories for a one-off run
+gh workflow run collect-news.yml \
+  --field categories="technology,health"
+
+# Use a different config file
+gh workflow run collect-news.yml \
+  --field config_path="config/my-config.yaml"
+```
+
+### Running locally with the same overrides
+
+```bash
+# Collect only technology and world news
+python src/collector.py --categories technology,world
+
+# Use a custom config and override categories
+python src/collector.py path/to/config.yaml --categories science
+```
 
 ### Required permissions
 

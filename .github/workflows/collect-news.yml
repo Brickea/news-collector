@@ -12,6 +12,12 @@ on:
         description: "Path to config file (relative to repo root)"
         required: false
         default: "config/config.yaml"
+      categories:
+        description: >
+          Comma-separated categories to collect, e.g. "technology,world".
+          Leave empty to use the categories defined in the config file.
+        required: false
+        default: ""
 
 jobs:
   collect:
@@ -34,7 +40,12 @@ jobs:
       - name: Collect news
         run: |
           CONFIG="${{ github.event.inputs.config_path || 'config/config.yaml' }}"
-          python src/collector.py "$CONFIG"
+          CATS="${{ github.event.inputs.categories }}"
+          if [ -n "$CATS" ]; then
+            python src/collector.py "$CONFIG" --categories "$CATS"
+          else
+            python src/collector.py "$CONFIG"
+          fi
 
       - name: Commit and push digest
         run: |

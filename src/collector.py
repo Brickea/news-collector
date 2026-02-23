@@ -155,11 +155,22 @@ def archive_old_files(
 # Main
 # ---------------------------------------------------------------------------
 
-def collect_news(config_path: str = "config/config.yaml") -> Path:
-    """Run the full collection pipeline and return the path to the output file."""
+def collect_news(
+    config_path: str = "config/config.yaml",
+    categories_override: list | None = None,
+) -> Path:
+    """Run the full collection pipeline and return the path to the output file.
+
+    *categories_override* – when provided, replaces the ``categories`` list from
+    the config file so the caller can choose which topics to collect without
+    editing the YAML (e.g. when triggering manually via GitHub Actions).
+    """
     config = load_config(config_path)
 
-    enabled_categories: set = set(config.get("categories", []))
+    if categories_override is not None:
+        enabled_categories: set = set(categories_override)
+    else:
+        enabled_categories: set = set(config.get("categories", []))
     sources: list = config.get("sources", [])
     output_cfg: dict = config.get("output", {})
     archive_cfg: dict = config.get("archive", {})
@@ -219,5 +230,28 @@ def collect_news(config_path: str = "config/config.yaml") -> Path:
 
 
 if __name__ == "__main__":
-    cfg = sys.argv[1] if len(sys.argv) > 1 else "config/config.yaml"
-    collect_news(cfg)
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Collect news and generate a dated Markdown digest."
+    )
+    parser.add_argument(
+        "config",
+        nargs="?",
+        default="config/config.yaml",
+        help="Path to the YAML config file (default: config/config.yaml)",
+    )
+    parser.add_argument(
+        "--categories",
+        metavar="CAT1,CAT2",
+        default=None,
+        help=(
+            "Comma-separated list of categories to collect, overriding the "
+            "'categories' field in the config file "
+            "(e.g. --categories technology,world)"
+        ),
+    )
+    args = parser.parse_args()
+
+    cats = [c.strip() for c in args.categories.split(",") if c.strip()] if args.categories else None
+    collect_news(args.config, categories_override=cats)

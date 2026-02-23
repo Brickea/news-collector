@@ -361,3 +361,84 @@ class TestCollectNews:
 
         # The old file should have been moved to the archive
         assert not old_file.exists()
+
+    def test_categories_override_takes_precedence(self, tmp_path, mocker):
+        """categories_override replaces the config's categories list."""
+        output_dir = tmp_path / "docs"
+        archive_dir = tmp_path / "docs" / "archive"
+
+        # Config says "world" only, but we override to "technology"
+        cfg = {
+            "categories": ["world"],
+            "sources": [
+                {
+                    "name": "TechSource",
+                    "type": "rss",
+                    "url": "https://tech.example.com/feed",
+                    "categories": ["technology"],
+                    "enabled": True,
+                },
+                {
+                    "name": "WorldSource",
+                    "type": "rss",
+                    "url": "https://world.example.com/feed",
+                    "categories": ["world"],
+                    "enabled": True,
+                },
+            ],
+            "output": {
+                "dir": str(output_dir),
+                "archive_dir": str(archive_dir),
+                "max_items_per_source": 5,
+            },
+            "archive": {"enabled": False},
+        }
+        cfg_file = tmp_path / "config.yaml"
+        cfg_file.write_text(yaml.dump(cfg))
+
+        mock_feed = mocker.MagicMock()
+        mock_feed.entries = []
+        mock_parse = mocker.patch("collector.feedparser.parse", return_value=mock_feed)
+
+        # Override to technology only
+        collect_news(str(cfg_file), categories_override=["technology"])
+
+        called_urls = [call.args[0] for call in mock_parse.call_args_list]
+        assert "https://tech.example.com/feed" in called_urls
+        assert "https://world.example.com/feed" not in called_urls
+
+    def test_categories_override_empty_list_collects_all(self, tmp_path, mocker):
+        """An empty categories_override list means no category filter is applied."""
+        output_dir = tmp_path / "docs"
+        archive_dir = tmp_path / "docs" / "archive"
+
+        cfg = {
+            "categories": ["world"],
+            "sources": [
+                {
+                    "name": "TechSource",
+                    "type": "rss",
+                    "url": "https://tech.example.com/feed",
+                    "categories": ["technology"],
+                    "enabled": True,
+                },
+            ],
+            "output": {
+                "dir": str(output_dir),
+                "archive_dir": str(archive_dir),
+                "max_items_per_source": 5,
+            },
+            "archive": {"enabled": False},
+        }
+        cfg_file = tmp_path / "config.yaml"
+        cfg_file.write_text(yaml.dump(cfg))
+
+        mock_feed = mocker.MagicMock()
+        mock_feed.entries = []
+        mock_parse = mocker.patch("collector.feedparser.parse", return_value=mock_feed)
+
+        # Empty override → no category filtering → tech source is fetched
+        collect_news(str(cfg_file), categories_override=[])
+
+        called_urls = [call.args[0] for call in mock_parse.call_args_list]
+        assert "https://tech.example.com/feed" in called_urls
