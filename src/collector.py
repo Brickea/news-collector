@@ -106,6 +106,25 @@ def _truncate(text: str, max_chars: int = 300) -> str:
     return text[:max_chars].rstrip() + "…"
 
 
+def _create_anchor(text: str) -> str:
+    """Create a markdown-compatible anchor link from text.
+
+    Removes emojis, special characters, and converts to lowercase with hyphens.
+    """
+    # Remove common emojis used in the digest
+    anchor = text.lower()
+    # Remove all emojis and special characters
+    anchor = re.sub(r'[🔬💼🌍🏥🔭💻📑📰&]', '', anchor)
+    # Replace spaces with hyphens
+    anchor = anchor.replace(' ', '-')
+    # Remove any remaining special characters except hyphens
+    anchor = re.sub(r'[^a-z0-9-]', '', anchor)
+    # Remove multiple consecutive hyphens
+    anchor = re.sub(r'-+', '-', anchor)
+    # Strip leading/trailing hyphens
+    return anchor.strip('-')
+
+
 def _generate_shingles(text: str, k: int = 3) -> set:
     """Generate k-shingles (k-grams) from text for better similarity detection.
 
@@ -381,9 +400,15 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
         for category in ['technology', 'coding', 'business', 'world', 'health', 'science', 'other']:
             if category in news_by_category:
                 category_title = categories_map.get(category, f'📑 {category.title()}')
-                # Create anchor link
-                anchor = category_title.lower().replace(' ', '-').replace('&', '').replace('🔬', '').replace('💼', '').replace('🌍', '').replace('🏥', '').replace('🔭', '').replace('💻', '').replace('📑', '').strip()
-                lines.append(f"- [{category_title}](#{anchor})")
+                # Create anchor link for category
+                category_anchor = _create_anchor(category_title)
+                lines.append(f"- [{category_title}](#{category_anchor})")
+
+                # Add source-level links under each category
+                for source_name, articles in news_by_category[category]:
+                    if articles:  # Only add if there are articles
+                        source_anchor = _create_anchor(f"📰 {source_name}")
+                        lines.append(f"  - [{source_name}](#{source_anchor})")
         lines.extend(["", "---", ""])
 
     # Render by category
