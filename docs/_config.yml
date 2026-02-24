@@ -4,60 +4,9 @@
 # Site settings
 title: "📰 Daily News Digest"
 description: "Your daily curated news from around the world - technology, business, health, science, and more"
-baseurl: "/news-collector"
-url: "https://brickea.github.io"
 
-# Theme
-theme: minima
-# Alternative themes you can try:
-# theme: jekyll-theme-cayman
-# theme: jekyll-theme-minimal
-
-# GitHub Pages metadata
-github:
-  repository_url: "https://github.com/Brickea/news-collector"
-
-# Navigation
-navigation:
-  - title: Home
-    url: /
-  - title: Archive
-    url: /archive/
-  - title: GitHub
-    url: https://github.com/Brickea/news-collector
-
-# Collections
-collections:
-  archive:
-    output: true
-    permalink: /archive/:year/:month/:day/
-
-# Defaults
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "default"
-
-# Plugins
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
+# Theme - using GitHub's default theme for better compatibility
+theme: jekyll-theme-minimal
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
-
-# Exclude files from processing
-exclude:
-  - README.md
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor
-
-# Include files that start with underscore or dot
-include:
-  - _config.yml
