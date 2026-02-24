@@ -20,6 +20,3 @@ htmlcov/
 .vscode/
 .idea/
 *.swp
-
-# Archive directory (old news files are moved here)
-docs/archive/
