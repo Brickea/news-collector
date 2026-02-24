@@ -19,11 +19,31 @@ from pathlib import Path
 
 import feedparser
 import yaml
+from googletrans import Translator
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _is_chinese(text: str) -> bool:
+    """Check if text contains significant Chinese characters."""
+    if not text:
+        return False
+    chinese_chars = len([c for c in text if '\u4e00' <= c <= '\u9fff'])
+    return chinese_chars > len(text) * 0.3  # More than 30% Chinese characters
+
+
+def _translate_to_chinese(text: str, translator: Translator) -> str:
+    """Translate text to Chinese (simplified). Returns empty string on error."""
+    if not text or _is_chinese(text):
+        return ""
+    try:
+        result = translator.translate(text, dest='zh-cn')
+        return result.text if result else ""
+    except Exception:
+        return ""
+
 
 def _strip_html(text: str) -> str:
     """Remove HTML tags and unescape HTML entities from *text*."""
@@ -77,11 +97,11 @@ def fetch_rss(url: str, max_items: int = 10) -> list:
 # Markdown generation
 # ---------------------------------------------------------------------------
 
-def generate_markdown(date: datetime, news_by_source: dict) -> str:
+def generate_markdown(date: datetime, news_by_source: dict, translator: Translator = None) -> str:
     """Return a markdown string for the daily digest.
 
-    *news_by_source* is an ordered dict mapping source name -> list of article
-    dicts (title, link, summary, published).
+    *news_by_source* is an ordered dict mapping source name -> dict with 'articles'
+    and 'categories' keys.
     """
     lines = [
         f"# 📰 News Digest – {date.strftime('%Y-%m-%d')}",
@@ -96,33 +116,81 @@ def generate_markdown(date: datetime, news_by_source: dict) -> str:
         lines.append("*No articles were collected. Check your configuration.*")
         return "\n".join(lines)
 
-    for source_name, articles in news_by_source.items():
+    # Organize by categories
+    categories_map = {
+        'technology': '🔬 Technology & AI',
+        'business': '💼 Business & Finance',
+        'world': '🌍 World News',
+        'health': '🏥 Health',
+        'science': '🔭 Science'
+    }
+
+    # Group sources by their primary category
+    news_by_category = {}
+    for source_name, source_data in news_by_source.items():
+        articles = source_data.get('articles', [])
+        categories = source_data.get('categories', [])
         if not articles:
             continue
-        lines.append(f"## {source_name}")
+
+        # Use the first category as primary
+        primary_cat = categories[0] if categories else 'other'
+        if primary_cat not in news_by_category:
+            news_by_category[primary_cat] = []
+        news_by_category[primary_cat].append((source_name, articles))
+
+    # Render by category
+    for category in ['technology', 'business', 'world', 'health', 'science', 'other']:
+        if category not in news_by_category:
+            continue
+
+        category_title = categories_map.get(category, f'📑 {category.title()}')
+        lines.append(f"# {category_title}")
         lines.append("")
-        for article in articles:
-            title = article["title"] or "Untitled"
-            link = article["link"]
-            summary = article.get("summary", "")
-            published = article.get("published", "")
+        lines.append("---")
+        lines.append("")
 
-            # Heading with hyperlink to original article
-            if link:
-                lines.append(f"### [{title}]({link})")
-            else:
-                lines.append(f"### {title}")
+        for source_name, articles in news_by_category[category]:
+            lines.append(f"## {source_name}")
+            lines.append("")
 
-            if published:
-                lines.append(f"*{published}*")
+            for article in articles:
+                title = article["title"] or "Untitled"
+                link = article["link"]
+                summary = article.get("summary", "")
+                published = article.get("published", "")
+
+                # Heading with hyperlink to original article
+                if link:
+                    lines.append(f"### [{title}]({link})")
+                else:
+                    lines.append(f"### {title}")
+
+                if published:
+                    lines.append(f"*{published}*")
+                    lines.append("")
+
+                if summary:
+                    lines.append(summary)
+
+                    # Add Chinese translation if not already Chinese
+                    if translator and not _is_chinese(title + summary):
+                        title_zh = _translate_to_chinese(title, translator)
+                        summary_zh = _translate_to_chinese(summary, translator)
+                        if title_zh or summary_zh:
+                            lines.append("")
+                            lines.append("**中文翻译：**")
+                            if title_zh:
+                                lines.append(f"*{title_zh}*")
+                            if summary_zh:
+                                lines.append(f"{summary_zh}")
+
+                    lines.append("")
+
+                if link:
+                    lines.append(f"🔗 [Read original]({link})")
+
                 lines.append("")
-
-            if summary:
-                lines.append(summary)
-                lines.append("")
-
-            if link:
-                lines.append(f"🔗 [Read original]({link})")
 
             lines.append("")
 
@@ -181,6 +249,9 @@ def collect_news(
 
     now = datetime.now(tz=timezone.utc)
 
+    # Initialize translator
+    translator = Translator()
+
     # --- Fetch articles ---------------------------------------------------
     news_by_source: dict = {}
 
@@ -202,7 +273,11 @@ def collect_news(
             try:
                 print(f"  Fetching {name} …")
                 articles = fetch_rss(source["url"], max_items)
-                news_by_source[name] = articles
+                # Store articles along with category information
+                news_by_source[name] = {
+                    'articles': articles,
+                    'categories': list(source_categories)
+                }
                 print(f"    → {len(articles)} article(s)")
             except Exception as exc:  # pylint: disable=broad-except
                 print(f"  ⚠ Failed to fetch {name}: {exc}", file=sys.stderr)
@@ -214,7 +289,7 @@ def collect_news(
     today_filename = f"{now.strftime('%Y-%m-%d')}.md"
     output_file = output_dir / today_filename
 
-    content = generate_markdown(now, news_by_source)
+    content = generate_markdown(now, news_by_source, translator)
     with open(output_file, "w", encoding="utf-8") as fh:
         fh.write(content)
 

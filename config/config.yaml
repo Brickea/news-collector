@@ -71,6 +71,24 @@ sources:
     categories: [technology]
     enabled: true
 
+  - name: MIT Technology Review AI
+    type: rss
+    url: https://www.technologyreview.com/topic/artificial-intelligence/feed
+    categories: [technology]
+    enabled: true
+
+  - name: AI News
+    type: rss
+    url: https://www.artificialintelligence-news.com/feed/
+    categories: [technology]
+    enabled: true
+
+  - name: VentureBeat AI
+    type: rss
+    url: https://venturebeat.com/category/ai/feed/
+    categories: [technology]
+    enabled: true
+
   # --- Business -----------------------------------------------------
   - name: Financial Times
     type: rss
