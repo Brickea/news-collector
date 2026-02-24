@@ -106,7 +106,8 @@ class TestGenerateMarkdown:
             }
         }
         md = generate_markdown(FIXED_DATE, news)
-        assert "[Breaking news](https://example.com/article)" in md
+        # Links are now HTML with target="_blank"
+        assert '<a href="https://example.com/article" target="_blank">Read Full Article →</a>' in md
         assert "https://example.com/article" in md
         assert "Something happened." in md
 
@@ -118,7 +119,8 @@ class TestGenerateMarkdown:
             }
         }
         md = generate_markdown(FIXED_DATE, news)
-        assert "## CNN" in md
+        # Source names are now h3 with emoji
+        assert "### 📰 CNN" in md
 
     def test_article_without_link(self):
         news = {

@@ -14,6 +14,7 @@ categories:
   - world
   - health
   - science
+  - coding
 
 # ------------------------------------------------------------
 # News sources.
@@ -87,6 +88,31 @@ sources:
     type: rss
     url: https://venturebeat.com/category/ai/feed/
     categories: [technology]
+    enabled: true
+
+  # --- Coding / Development -----------------------------------------
+  - name: GitHub Trending
+    type: rss
+    url: https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml
+    categories: [coding]
+    enabled: true
+
+  - name: Dev.to
+    type: rss
+    url: https://dev.to/feed
+    categories: [coding]
+    enabled: true
+
+  - name: Stack Overflow Blog
+    type: rss
+    url: https://stackoverflow.blog/feed/
+    categories: [coding]
+    enabled: true
+
+  - name: CSS-Tricks
+    type: rss
+    url: https://css-tricks.com/feed/
+    categories: [coding]
     enabled: true
 
   # --- Business -----------------------------------------------------
