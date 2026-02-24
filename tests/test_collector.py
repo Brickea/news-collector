@@ -67,30 +67,33 @@ class TestGetDailyCoverImage:
         date = datetime(2026, 2, 24, tzinfo=timezone.utc)
         result = _get_daily_cover_image(date)
         assert isinstance(result, tuple)
-        assert len(result) == 2
+        assert len(result) == 3
 
     def test_picsum_fallback_url_format(self):
         # Since NASA API might not be accessible, test the Picsum fallback
         date = datetime(2026, 2, 24, tzinfo=timezone.utc)
-        url, attribution = _get_daily_cover_image(date)
+        url, attribution, description = _get_daily_cover_image(date)
         # URL should contain the date for consistency
         assert "2026-02-24" in url or "picsum" in url.lower()
         assert isinstance(attribution, str)
         assert len(attribution) > 0
+        # Description should be present
+        assert isinstance(description, str)
+        assert len(description) > 0
 
     def test_different_dates_produce_different_urls(self):
         date1 = datetime(2026, 2, 24, tzinfo=timezone.utc)
         date2 = datetime(2026, 2, 25, tzinfo=timezone.utc)
-        url1, _ = _get_daily_cover_image(date1)
-        url2, _ = _get_daily_cover_image(date2)
+        url1, _, _ = _get_daily_cover_image(date1)
+        url2, _, _ = _get_daily_cover_image(date2)
         # Different dates should produce different URLs
         assert url1 != url2
 
     def test_same_date_produces_consistent_url(self):
         date1 = datetime(2026, 2, 24, 10, 0, tzinfo=timezone.utc)
         date2 = datetime(2026, 2, 24, 14, 30, tzinfo=timezone.utc)
-        url1, _ = _get_daily_cover_image(date1)
-        url2, _ = _get_daily_cover_image(date2)
+        url1, _, _ = _get_daily_cover_image(date1)
+        url2, _, _ = _get_daily_cover_image(date2)
         # Same date (different time) should produce the same URL
         assert url1 == url2
 
@@ -318,6 +321,19 @@ class TestGenerateMarkdown:
         assert "![Daily News]" in md
         # Check that attribution is included
         assert "*Image:" in md
+        # Check that description is included (either NASA explanation or Picsum description)
+        # Description should be in a blockquote
+        lines = md.split('\n')
+        cover_idx = lines.index("## 📸 Cover")
+        # Find lines between cover section and next section
+        cover_section_lines = []
+        for i in range(cover_idx, len(lines)):
+            if i > cover_idx and lines[i].startswith("## "):
+                break
+            cover_section_lines.append(lines[i])
+        cover_section = '\n'.join(cover_section_lines)
+        # Either has NASA description or Picsum description
+        assert ">" in cover_section or "beautiful random photograph" in cover_section.lower()
 
     def test_article_link_in_output(self):
         news = {

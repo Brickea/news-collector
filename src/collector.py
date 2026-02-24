@@ -28,15 +28,15 @@ from googletrans import Translator
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _get_daily_cover_image(date: datetime) -> tuple[str, str]:
-    """Get a daily cover image URL and attribution.
+def _get_daily_cover_image(date: datetime) -> tuple[str, str, str]:
+    """Get a daily cover image URL, attribution, and description.
 
     Tries multiple sources in order:
     1. NASA APOD (Astronomy Picture of the Day) - free, daily changing, high quality
     2. Picsum Photos - fallback with date-based seed for consistency
 
     Returns:
-        tuple: (image_url, attribution_text)
+        tuple: (image_url, attribution_text, description)
     """
     date_str = date.strftime('%Y-%m-%d')
 
@@ -54,8 +54,11 @@ def _get_daily_cover_image(date: datetime) -> tuple[str, str]:
                 if data.get('media_type') == 'image':
                     img_url = data.get('url', '')
                     title = data.get('title', 'NASA APOD')
+                    explanation = data.get('explanation', '')
                     attribution = f"*Image: {title} - NASA Astronomy Picture of the Day*"
-                    return img_url, attribution
+                    # Truncate explanation to reasonable length for cover section
+                    description = _truncate(explanation, max_chars=400) if explanation else ""
+                    return img_url, attribution, description
     except Exception:
         # If NASA APOD fails, continue to fallback
         pass
@@ -65,8 +68,9 @@ def _get_daily_cover_image(date: datetime) -> tuple[str, str]:
     date_seed = int(date.strftime('%Y%m%d')) % 1000  # Use modulo to get valid image ID
     picsum_url = f"https://picsum.photos/seed/{date_str}/1200/400"
     attribution = "*Image: Daily photo from Picsum Photos*"
+    description = "A beautiful random photograph to brighten your day while you catch up on the latest news."
 
-    return picsum_url, attribution
+    return picsum_url, attribution, description
 
 
 def _is_chinese(text: str) -> bool:
@@ -311,7 +315,7 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
 
     # Add cover section with daily changing image
     # Get daily cover image from NASA APOD or Picsum fallback
-    cover_url, cover_attribution = _get_daily_cover_image(date)
+    cover_url, cover_attribution, cover_description = _get_daily_cover_image(date)
 
     lines.extend([
         "## 📸 Cover",
@@ -320,6 +324,16 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
         "",
         cover_attribution,
         "",
+    ])
+
+    # Add description if available
+    if cover_description:
+        lines.extend([
+            f"> {cover_description}",
+            "",
+        ])
+
+    lines.extend([
         "*Stay informed with today's curated news from around the world.*",
         "",
     ])
