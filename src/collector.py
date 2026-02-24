@@ -16,6 +16,8 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib import request
+import json
 
 import feedparser
 import yaml
@@ -25,6 +27,47 @@ from googletrans import Translator
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _get_daily_cover_image(date: datetime) -> tuple[str, str]:
+    """Get a daily cover image URL and attribution.
+
+    Tries multiple sources in order:
+    1. NASA APOD (Astronomy Picture of the Day) - free, daily changing, high quality
+    2. Picsum Photos - fallback with date-based seed for consistency
+
+    Returns:
+        tuple: (image_url, attribution_text)
+    """
+    date_str = date.strftime('%Y-%m-%d')
+
+    # Try NASA APOD API (free, no key required for reasonable use)
+    # This provides a different high-quality image every day
+    try:
+        # NASA APOD API - get picture for today
+        apod_url = f"https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date={date_str}"
+
+        with request.urlopen(apod_url, timeout=5) as response:
+            if response.status == 200:
+                data = json.loads(response.read().decode())
+
+                # Check if it's an image (not a video)
+                if data.get('media_type') == 'image':
+                    img_url = data.get('url', '')
+                    title = data.get('title', 'NASA APOD')
+                    attribution = f"*Image: {title} - NASA Astronomy Picture of the Day*"
+                    return img_url, attribution
+    except Exception:
+        # If NASA APOD fails, continue to fallback
+        pass
+
+    # Fallback: Use Picsum Photos with date-based seed for consistency
+    # This ensures the same image appears for the same date
+    date_seed = int(date.strftime('%Y%m%d')) % 1000  # Use modulo to get valid image ID
+    picsum_url = f"https://picsum.photos/seed/{date_str}/1200/400"
+    attribution = "*Image: Daily photo from Picsum Photos*"
+
+    return picsum_url, attribution
+
 
 def _is_chinese(text: str) -> bool:
     """Check if text contains significant Chinese characters."""
@@ -267,18 +310,15 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
         return "\n".join(lines)
 
     # Add cover section with daily changing image
-    # Use Unsplash's "photo of the day" style with different seed based on date
-    # to get different images each day while keeping the same image for the same date
-    date_seed = date.strftime('%Y%m%d')
-    cover_topics = ['technology', 'news', 'world-news', 'science', 'innovation']
-    topic_index = int(date_seed) % len(cover_topics)
-    cover_topic = cover_topics[topic_index]
-    cover_url = f"https://source.unsplash.com/1200x400/?{cover_topic},daily&sig={date_seed}"
+    # Get daily cover image from NASA APOD or Picsum fallback
+    cover_url, cover_attribution = _get_daily_cover_image(date)
 
     lines.extend([
         "## 📸 Cover",
         "",
         f"![Daily News]({cover_url})",
+        "",
+        cover_attribution,
         "",
         "*Stay informed with today's curated news from around the world.*",
         "",
