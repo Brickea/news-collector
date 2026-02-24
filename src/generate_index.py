@@ -76,7 +76,9 @@ def generate_index_content(digests: list[tuple[datetime, str]]) -> str:
         emoji = "🌟" if i == 0 else "📰"
         label = "Latest digest" if i == 0 else day_name
 
-        recent_section.append(f"- [{emoji} {date_str}]({path}) - {label}")
+        # Convert .md to .html for GitHub Pages
+        html_path = path.replace('.md', '.html')
+        recent_section.append(f"- [{emoji} {date_str}]({html_path}) - {label}")
 
     recent_digests_text = '\n'.join(recent_section)
 
@@ -116,6 +118,8 @@ def generate_index_content(digests: list[tuple[datetime, str]]) -> str:
     # Get today's date for the latest digest link
     today = datetime.now().strftime('%Y-%m-%d')
     latest_digest_path = digests[0][1] if digests else f"{today}.md"
+    # Convert .md to .html for GitHub Pages
+    latest_digest_html = latest_digest_path.replace('.md', '.html')
 
     # Generate full index content
     content = f"""---
@@ -134,7 +138,7 @@ Welcome to the **Daily News Digest**! This is an automated collection of the lat
 <div class="latest-digest" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 12px; margin: 2rem 0; color: white;">
   <h3 style="margin-top: 0; color: white;">🌟 Today's News</h3>
   <p style="font-size: 1.2rem; margin-bottom: 1rem;">{today}</p>
-  <a href="{latest_digest_path}" style="display: inline-block; background: white; color: #667eea; padding: 0.75rem 2rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: transform 0.2s;">
+  <a href="{latest_digest_html}" style="display: inline-block; background: white; color: #667eea; padding: 0.75rem 2rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: transform 0.2s;">
     📖 Read Today's Digest →
   </a>
 </div>
@@ -198,7 +202,7 @@ Our news digest covers the following categories:
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/Brickea/news-collector) - View the source code and configuration
-- [Latest Digest]({latest_digest_path}) - Today's news
+- [Latest Digest]({latest_digest_html}) - Today's news
 - [Archive](archive/) - Browse past digests
 
 ---
