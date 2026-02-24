@@ -104,17 +104,27 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
     and 'categories' keys.
     """
     lines = [
-        f"# 📰 News Digest – {date.strftime('%Y-%m-%d')}",
+        f"# 📰 Daily News Digest · {date.strftime('%Y-%m-%d')}",
         "",
-        f"> Generated at {date.strftime('%Y-%m-%d %H:%M')} UTC",
-        "",
-        "---",
+        f"> 🗓️ Generated on {date.strftime('%Y-%m-%d')} at {date.strftime('%H:%M')} UTC",
         "",
     ]
 
     if not news_by_source:
+        lines.append("---")
+        lines.append("")
         lines.append("*No articles were collected. Check your configuration.*")
         return "\n".join(lines)
+
+    # Add cover section with placeholder image
+    lines.extend([
+        "## 📸 Cover",
+        "",
+        "![Daily News](https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=400&fit=crop)",
+        "",
+        "*Stay informed with today's curated news from around the world.*",
+        "",
+    ])
 
     # Organize by categories
     categories_map = {
@@ -139,60 +149,98 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
             news_by_category[primary_cat] = []
         news_by_category[primary_cat].append((source_name, articles))
 
+    # Add table of contents
+    if news_by_category:
+        lines.extend([
+            "## 📑 Table of Contents",
+            "",
+        ])
+        for category in ['technology', 'business', 'world', 'health', 'science', 'other']:
+            if category in news_by_category:
+                category_title = categories_map.get(category, f'📑 {category.title()}')
+                # Create anchor link
+                anchor = category_title.lower().replace(' ', '-').replace('&', '').replace('🔬', '').replace('💼', '').replace('🌍', '').replace('🏥', '').replace('🔭', '').replace('📑', '').strip()
+                lines.append(f"- [{category_title}](#{anchor})")
+        lines.extend(["", "---", ""])
+
     # Render by category
     for category in ['technology', 'business', 'world', 'health', 'science', 'other']:
         if category not in news_by_category:
             continue
 
         category_title = categories_map.get(category, f'📑 {category.title()}')
-        lines.append(f"# {category_title}")
-        lines.append("")
-        lines.append("---")
+        lines.append(f"## {category_title}")
         lines.append("")
 
         for source_name, articles in news_by_category[category]:
-            lines.append(f"## {source_name}")
+            lines.append(f"### 📰 {source_name}")
             lines.append("")
 
-            for article in articles:
+            for idx, article in enumerate(articles, 1):
                 title = article["title"] or "Untitled"
                 link = article["link"]
                 summary = article.get("summary", "")
                 published = article.get("published", "")
 
-                # Heading with hyperlink to original article
-                if link:
-                    lines.append(f"### [{title}]({link})")
-                else:
-                    lines.append(f"### {title}")
+                # Article card with better formatting
+                lines.append(f"#### {idx}. {title}")
+                lines.append("")
 
                 if published:
-                    lines.append(f"*{published}*")
+                    lines.append(f"🕒 *Published: {published}*")
                     lines.append("")
 
                 if summary:
-                    lines.append(summary)
+                    # Add a quoted summary for better visual separation
+                    lines.append(f"> {summary}")
+                    lines.append("")
 
                     # Add Chinese translation if not already Chinese
                     if translator and not _is_chinese(title + summary):
                         title_zh = _translate_to_chinese(title, translator)
                         summary_zh = _translate_to_chinese(summary, translator)
                         if title_zh or summary_zh:
+                            lines.append("<details>")
+                            lines.append("<summary>📖 中文翻译 (点击展开)</summary>")
                             lines.append("")
-                            lines.append("**中文翻译：**")
                             if title_zh:
-                                lines.append(f"*{title_zh}*")
+                                lines.append(f"**{title_zh}**")
+                                lines.append("")
                             if summary_zh:
-                                lines.append(f"{summary_zh}")
-
-                    lines.append("")
+                                lines.append(summary_zh)
+                            lines.append("")
+                            lines.append("</details>")
+                            lines.append("")
 
                 if link:
-                    lines.append(f"🔗 [Read original]({link})")
+                    lines.append(f"🔗 **[Read Full Article →]({link})**")
+                    lines.append("")
 
-                lines.append("")
+                # Visual separator between articles
+                if idx < len(articles):
+                    lines.append("---")
+                    lines.append("")
 
             lines.append("")
+
+        # Category separator
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    # Add footer
+    lines.extend([
+        "## 📌 About This Digest",
+        "",
+        "This daily news digest is automatically generated from various RSS feeds.",
+        "",
+        "- 🤖 Powered by automated collection and AI translation",
+        "- 🌐 Sources from trusted news outlets worldwide",
+        "- 📅 Published daily with the latest updates",
+        "",
+        f"*Last updated: {date.strftime('%Y-%m-%d %H:%M')} UTC*",
+        "",
+    ])
 
     return "\n".join(lines)
 
