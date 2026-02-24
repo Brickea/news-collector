@@ -21,6 +21,7 @@ from collector import (  # noqa: E402
     _generate_shingles,
     _calculate_similarity,
     _deduplicate_articles,
+    _get_daily_cover_image,
     archive_old_files,
     fetch_rss,
     generate_markdown,
@@ -59,6 +60,39 @@ class TestTruncate:
     def test_exact_boundary(self):
         s = "x" * 300
         assert _truncate(s, 300) == s
+
+
+class TestGetDailyCoverImage:
+    def test_returns_tuple(self):
+        date = datetime(2026, 2, 24, tzinfo=timezone.utc)
+        result = _get_daily_cover_image(date)
+        assert isinstance(result, tuple)
+        assert len(result) == 2
+
+    def test_picsum_fallback_url_format(self):
+        # Since NASA API might not be accessible, test the Picsum fallback
+        date = datetime(2026, 2, 24, tzinfo=timezone.utc)
+        url, attribution = _get_daily_cover_image(date)
+        # URL should contain the date for consistency
+        assert "2026-02-24" in url or "picsum" in url.lower()
+        assert isinstance(attribution, str)
+        assert len(attribution) > 0
+
+    def test_different_dates_produce_different_urls(self):
+        date1 = datetime(2026, 2, 24, tzinfo=timezone.utc)
+        date2 = datetime(2026, 2, 25, tzinfo=timezone.utc)
+        url1, _ = _get_daily_cover_image(date1)
+        url2, _ = _get_daily_cover_image(date2)
+        # Different dates should produce different URLs
+        assert url1 != url2
+
+    def test_same_date_produces_consistent_url(self):
+        date1 = datetime(2026, 2, 24, 10, 0, tzinfo=timezone.utc)
+        date2 = datetime(2026, 2, 24, 14, 30, tzinfo=timezone.utc)
+        url1, _ = _get_daily_cover_image(date1)
+        url2, _ = _get_daily_cover_image(date2)
+        # Same date (different time) should produce the same URL
+        assert url1 == url2
 
 
 # ---------------------------------------------------------------------------
@@ -262,6 +296,28 @@ class TestGenerateMarkdown:
     def test_empty_sources_shows_placeholder(self):
         md = generate_markdown(FIXED_DATE, {})
         assert "No articles" in md
+
+    def test_cover_image_included(self):
+        news = {
+            "Test Source": {
+                "articles": [
+                    {
+                        "title": "Test Article",
+                        "link": "https://example.com/article",
+                        "summary": "Test summary.",
+                        "published": "Fri, 15 Mar 2024 08:00:00 GMT",
+                    }
+                ],
+                "categories": ["technology"]
+            }
+        }
+        md = generate_markdown(FIXED_DATE, news)
+        # Check that cover section exists
+        assert "## 📸 Cover" in md
+        # Check that an image is included
+        assert "![Daily News]" in md
+        # Check that attribution is included
+        assert "*Image:" in md
 
     def test_article_link_in_output(self):
         news = {
