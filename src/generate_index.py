@@ -302,10 +302,11 @@ def generate_period_index(year: int, month: int, period_digests: list[tuple[date
         date_str = date.strftime('%Y-%m-%d')
         day_name = date.strftime('%A')
 
-        # Calculate relative path from archive/YYYY/MM/ to the digest file
-        # path is relative to docs_dir, e.g., "archive/2026/02/2026-02-23.md"
-        digest_filename = Path(path).name.replace('.md', '.html')
-        digest_section.append(f"- [{date_str}]({digest_filename}) - {day_name}")
+        digest_path = docs_dir / path
+        period_dir = docs_dir / 'archive' / str(year) / f"{month:02d}"
+        digest_html_path = digest_path.with_suffix('.html')
+        relative_path = os.path.relpath(digest_html_path, period_dir)
+        digest_section.append(f"- [{date_str}]({relative_path}) - {day_name}")
 
     digest_list_text = '\n'.join(digest_section) if digest_section else "- No digests for this period"
 
