@@ -21,7 +21,5 @@ htmlcov/
 .idea/
 *.swp
 
-# Generated news files (keep only README.md in docs)
-docs/*.md
-!docs/README.md
+# Archive directory (old news files are moved here)
 docs/archive/
