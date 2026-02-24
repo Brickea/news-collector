@@ -20,8 +20,3 @@ htmlcov/
 .vscode/
 .idea/
 *.swp
-
-# Generated news files (keep only README.md in docs)
-docs/*.md
-!docs/README.md
-docs/archive/
