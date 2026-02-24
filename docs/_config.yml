@@ -1,0 +1,12 @@
+# GitHub Pages Configuration for News Collector
+# ============================================================
+
+# Site settings
+title: "📰 Daily News Digest"
+description: "Your daily curated news from around the world - technology, business, health, science, and more"
+
+# Theme - using GitHub's default theme for better compatibility
+theme: jekyll-theme-minimal
+
+# Build settings
+markdown: kramdown

@@ -47,6 +47,9 @@ jobs:
             python src/collector.py "$CONFIG"
           fi
 
+      - name: Generate GitHub Pages index
+        run: python src/generate_index.py
+
       - name: Commit and push digest
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

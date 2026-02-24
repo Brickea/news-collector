@@ -300,7 +300,13 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
     *news_by_source* is an ordered dict mapping source name -> dict with 'articles'
     and 'categories' keys.
     """
+    # Add Jekyll front matter for GitHub Pages rendering
     lines = [
+        "---",
+        "layout: default",
+        f"title: 📰 Daily News Digest · {date.strftime('%Y-%m-%d')}",
+        "---",
+        "",
         f"# 📰 Daily News Digest · {date.strftime('%Y-%m-%d')}",
         "",
         f"> 🗓️ Generated on {date.strftime('%Y-%m-%d')} at {date.strftime('%H:%M')} UTC",
