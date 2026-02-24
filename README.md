@@ -14,7 +14,8 @@ runs as a **GitHub Actions** workflow on a daily schedule.
 | **Configurable categories** | Choose which news topics to collect (technology, world, business, health, science, …). |
 | **Configurable sources** | Enable/disable individual RSS/Atom feeds per run; add new sources in seconds. |
 | **X / Twitter support** | Follow X accounts via a Nitter RSS proxy (see [Adding X/Twitter sources](#adding-xtwitter-sources)). |
-| **Markdown output** | Each digest is a readable `YYYY-MM-DD.md` file; every headline links to its original article. |
+| **Rich Markdown output** | Human-friendly format with cover images, table of contents, visual separators, and collapsible translations. |
+| **Chinese translation** | Automatic AI-powered translation in collapsible sections for non-Chinese content. |
 | **Archiving** | Older digests are automatically moved into `docs/archive/YYYY/MM/` (format configurable). |
 | **GitHub Actions automation** | Daily schedule + manual trigger; results committed back to the repository. |
 
@@ -46,6 +47,55 @@ python src/collector.py path/to/my-config.yaml
 ```
 
 The digest is written to `docs/YYYY-MM-DD.md`.
+
+---
+
+## Output Format
+
+The generated markdown files feature a **human-friendly reading experience** inspired by popular tech newsletters:
+
+### Key Features
+
+- **📸 Cover Image**: Eye-catching header with contextual imagery
+- **📑 Table of Contents**: Quick navigation to different news categories
+- **Organized by Category**: News grouped into Technology, Business, World, Health, and Science
+- **Rich Article Cards**: Each article includes:
+  - Numbered list for easy reference
+  - Publication timestamp
+  - Blockquoted summary for visual distinction
+  - Prominent "Read Full Article" links
+  - **Collapsible Chinese translations** (for non-Chinese content)
+- **Visual Separators**: Clear section breaks for better readability
+- **Footer**: Information about the digest generation
+
+### Example Structure
+
+```markdown
+# 📰 Daily News Digest · 2026-02-24
+
+## 📸 Cover
+[Cover image]
+
+## 📑 Table of Contents
+- Technology & AI
+- World News
+- Science
+
+## 🔬 Technology & AI
+
+### 📰 TechCrunch
+
+#### 1. Article Title
+🕒 Published: ...
+> Article summary in blockquote
+
+<details>
+<summary>📖 中文翻译</summary>
+[Chinese translation]
+</details>
+
+🔗 Read Full Article →
+```
 
 ---
 
