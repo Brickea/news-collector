@@ -5,12 +5,15 @@ feeds, generates a dated **Markdown** file with every item linked back to its
 original URL, and automatically archives older digests.  The entire pipeline
 runs as a **GitHub Actions** workflow on a daily schedule.
 
+**🌐 [View the live news digests on GitHub Pages →](https://brickea.github.io/news-collector/)**
+
 ---
 
 ## Features
 
 | Feature | Description |
 |---------|-------------|
+| **GitHub Pages site** | Beautiful web interface for browsing all news digests (see [live site](https://brickea.github.io/news-collector/)). |
 | **Configurable categories** | Choose which news topics to collect (technology, world, business, health, science, …). |
 | **Configurable sources** | Enable/disable individual RSS/Atom feeds per run; add new sources in seconds. |
 | **X / Twitter support** | Follow X accounts via a Nitter RSS proxy (see [Adding X/Twitter sources](#adding-xtwitter-sources)). |
