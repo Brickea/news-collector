@@ -78,7 +78,8 @@ def generate_index_content(digests: list[tuple[datetime, str]]) -> str:
 
         # Convert .md to .html for GitHub Pages
         html_path = path.replace('.md', '.html')
-        recent_section.append(f"- [{emoji} {date_str}]({html_path}) - {label}")
+        # Use HTML anchor tags to ensure proper rendering inside div
+        recent_section.append(f'<div style="padding: 0.5rem 0;">• <a href="{html_path}" style="color: #667eea; text-decoration: none; font-weight: 500;">{emoji} {date_str}</a> - {label}</div>')
 
     recent_digests_text = '\n'.join(recent_section)
 
@@ -149,10 +150,8 @@ Browse through our collection of daily news digests:
 
 ### 📆 Recent Digests
 
-<div class="archive-grid" style="display: grid; gap: 1rem; margin-top: 1.5rem;">
-
+<div class="archive-grid" style="display: block; margin-top: 1.5rem;">
 {recent_digests_text}
-
 </div>
 
 ### 📚 Full Archive by Period

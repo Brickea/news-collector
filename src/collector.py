@@ -308,7 +308,7 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
         "---",
         "",
         '<div style="margin-bottom: 1rem;">',
-        '  <a href="/" style="display: inline-block; padding: 0.5rem 1rem; background: #667eea; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">← Back to Home</a>',
+        '  <a href="/news-collector/" style="display: inline-block; padding: 0.5rem 1rem; background: #667eea; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">← Back to Home</a>',
         '</div>',
         "",
         f"# 📰 Daily News Digest · {date.strftime('%Y-%m-%d')}",
