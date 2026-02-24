@@ -417,11 +417,15 @@ def generate_markdown(date: datetime, news_by_source: dict, translator: Translat
             continue
 
         category_title = categories_map.get(category, f'📑 {category.title()}')
-        lines.append(f"## {category_title}")
+        # Add explicit anchor ID using kramdown syntax
+        category_anchor = _create_anchor(category_title)
+        lines.append(f"## {category_title} {{#{category_anchor}}}")
         lines.append("")
 
         for source_name, articles in news_by_category[category]:
-            lines.append(f"### 📰 {source_name}")
+            # Add explicit anchor ID for source section
+            source_anchor = _create_anchor(f"📰 {source_name}")
+            lines.append(f"### 📰 {source_name} {{#{source_anchor}}}")
             lines.append("")
 
             for idx, article in enumerate(articles, 1):

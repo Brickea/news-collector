@@ -85,5 +85,5 @@ Our news digest covers the following categories:
 <div style="text-align: center; padding: 2rem 0; color: #666;">
   <p>📰 Powered by <a href="https://github.com/Brickea/news-collector">news-collector</a></p>
   <p style="font-size: 0.9rem;">Automatically updated daily via GitHub Actions</p>
-  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-24 08:22 UTC</p>
+  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-24 09:19 UTC</p>
 </div>
