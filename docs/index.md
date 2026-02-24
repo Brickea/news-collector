@@ -25,11 +25,9 @@ Browse through our collection of daily news digests:
 
 ### 📆 Recent Digests
 
-<div class="archive-grid" style="display: grid; gap: 1rem; margin-top: 1.5rem;">
-
-- [🌟 2026-02-24](2026-02-24.html) - Latest digest
-- [📰 2026-02-23](archive/2026/02/2026-02-23.html) - Monday
-
+<div class="archive-grid" style="display: block; margin-top: 1.5rem;">
+<div style="padding: 0.5rem 0;">• <a href="2026-02-24.html" style="color: #667eea; text-decoration: none; font-weight: 500;">🌟 2026-02-24</a> - Latest digest</div>
+<div style="padding: 0.5rem 0;">• <a href="archive/2026/02/2026-02-23.html" style="color: #667eea; text-decoration: none; font-weight: 500;">📰 2026-02-23</a> - Monday</div>
 </div>
 
 ### 📚 Full Archive by Period
@@ -87,5 +85,5 @@ Our news digest covers the following categories:
 <div style="text-align: center; padding: 2rem 0; color: #666;">
   <p>📰 Powered by <a href="https://github.com/Brickea/news-collector">news-collector</a></p>
   <p style="font-size: 0.9rem;">Automatically updated daily via GitHub Actions</p>
-  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-24 07:39 UTC</p>
+  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-24 07:46 UTC</p>
 </div>
