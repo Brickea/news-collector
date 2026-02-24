@@ -93,14 +93,17 @@ class TestGenerateMarkdown:
 
     def test_article_link_in_output(self):
         news = {
-            "Test Source": [
-                {
-                    "title": "Breaking news",
-                    "link": "https://example.com/article",
-                    "summary": "Something happened.",
-                    "published": "Fri, 15 Mar 2024 08:00:00 GMT",
-                }
-            ]
+            "Test Source": {
+                "articles": [
+                    {
+                        "title": "Breaking news",
+                        "link": "https://example.com/article",
+                        "summary": "Something happened.",
+                        "published": "Fri, 15 Mar 2024 08:00:00 GMT",
+                    }
+                ],
+                "categories": ["world"]
+            }
         }
         md = generate_markdown(FIXED_DATE, news)
         assert "[Breaking news](https://example.com/article)" in md
@@ -108,12 +111,22 @@ class TestGenerateMarkdown:
         assert "Something happened." in md
 
     def test_source_heading_present(self):
-        news = {"CNN": [{"title": "T", "link": "https://x.com", "summary": "", "published": ""}]}
+        news = {
+            "CNN": {
+                "articles": [{"title": "T", "link": "https://x.com", "summary": "", "published": ""}],
+                "categories": ["world"]
+            }
+        }
         md = generate_markdown(FIXED_DATE, news)
         assert "## CNN" in md
 
     def test_article_without_link(self):
-        news = {"Src": [{"title": "No link article", "link": "", "summary": "", "published": ""}]}
+        news = {
+            "Src": {
+                "articles": [{"title": "No link article", "link": "", "summary": "", "published": ""}],
+                "categories": ["technology"]
+            }
+        }
         md = generate_markdown(FIXED_DATE, news)
         # Should not produce a broken markdown link
         assert "[No link article]()" not in md
