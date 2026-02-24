@@ -157,8 +157,11 @@ sources:
 
 ## GitHub Actions automation
 
-The workflow file `.github/workflows/collect-news.yml` runs the collector
-automatically:
+This repository uses two GitHub Actions workflows to automate news collection and deployment:
+
+### 1. Collect News (`.github/workflows/collect-news.yml`)
+
+Runs the news collector automatically:
 
 * **Scheduled** – every day at **08:00 UTC**.
 * **Manual** – trigger *workflow_dispatch* from the GitHub Actions UI at any
@@ -166,6 +169,15 @@ automatically:
 
 After a successful run the generated/archived files are committed back to the
 repository with the message `📰 Daily news digest YYYY-MM-DD`.
+
+### 2. Deploy GitHub Pages (`.github/workflows/deploy-pages.yml`)
+
+Automatically deploys the news digests to GitHub Pages:
+
+* **Triggered automatically** – runs after the "Collect News" workflow completes successfully on the `main` branch.
+* **Manual** – can be triggered manually via *workflow_dispatch* if needed.
+
+This ensures that the [live GitHub Pages site](https://brickea.github.io/news-collector/) is updated immediately after new news is collected.
 
 ### Manually triggering a collection run
 
