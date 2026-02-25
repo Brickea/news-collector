@@ -80,11 +80,12 @@ Our news digest covers the following categories:
 - [GitHub Repository](https://github.com/Brickea/news-collector) - View the source code and configuration
 - [Latest Digest](2026-02-25.html) - Today's news
 - [Archive](archive/) - Browse past digests
+- [📊 Summaries](archive/summaries/) - Monthly digest summaries
 
 ---
 
 <div style="text-align: center; padding: 2rem 0; color: #666;">
   <p>📰 Powered by <a href="https://github.com/Brickea/news-collector">news-collector</a></p>
   <p style="font-size: 0.9rem;">Automatically updated daily via GitHub Actions</p>
-  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-25 01:13 UTC</p>
+  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-25 02:57 UTC</p>
 </div>

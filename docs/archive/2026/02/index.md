@@ -7,7 +7,7 @@ title: 📰 February 2026 Archive
 
 > News digests from February 2026
 
-[← Back to Archive](../../) | [← Back to Home](../../../)
+[← Back to Archive](../../) | [← Back to Home](../../../) | [📊 View Summary](summary.html)
 
 ## 📅 Digests
 
