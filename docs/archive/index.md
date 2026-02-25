@@ -11,7 +11,7 @@ title: 📰 News Archive
 
 ## 📚 Archive by Period
 
-- [February 2026](2026/02/) - 2 digests
+- [February 2026](2026/02/) - 3 digests
 
 ---
 
