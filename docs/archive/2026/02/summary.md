@@ -12,8 +12,8 @@ title: 📊 February 2026 Summary
 ## 📈 Overview
 
 - **Total Days**: 3
-- **Total Articles**: 293
-- **Average Articles per Day**: 97
+- **Total Articles**: 294
+- **Average Articles per Day**: 98
 
 ## 📊 Category Breakdown
 
@@ -29,13 +29,13 @@ title: 📊 February 2026 Summary
 
 ### 💼 Business & Finance
 
-- **Articles**: 39
+- **Articles**: 30
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🌍 World News
 
-- **Articles**: 20
-- **Sources**: BBC News
+- **Articles**: 30
+- **Sources**: BBC News, CNN Top Stories
 
 ### 🏥 Health
 
@@ -67,12 +67,12 @@ title: 📊 February 2026 Summary
 
 ### [2026-02-25](../2026-02-25.html) - Wednesday
 
-**146 articles** collected from:
+**147 articles** collected from:
 
 - 🔬 Technology & AI: 57 articles
 - 💻 Coding & Development: 40 articles
-- 💼 Business & Finance: 19 articles
-- 🌍 World News: 10 articles
+- 💼 Business & Finance: 10 articles
+- 🌍 World News: 20 articles
 - 🏥 Health: 10 articles
 - 🔭 Science: 10 articles
 
