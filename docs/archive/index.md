@@ -7,7 +7,7 @@ title: 📰 News Archive
 
 > Browse all past news digests
 
-[← Back to Home](../)
+[← Back to Home](../) | [📊 View Summaries](summaries/)
 
 ## 📚 Archive by Period
 

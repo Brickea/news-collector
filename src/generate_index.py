@@ -203,6 +203,7 @@ Our news digest covers the following categories:
 - [GitHub Repository](https://github.com/Brickea/news-collector) - View the source code and configuration
 - [Latest Digest]({latest_digest_html}) - Today's news
 - [Archive](archive/) - Browse past digests
+- [📊 Summaries](archive/summaries/) - Monthly digest summaries
 
 ---
 
@@ -266,7 +267,7 @@ title: 📰 News Archive
 
 > Browse all past news digests
 
-[← Back to Home](../)
+[← Back to Home](../) | [📊 View Summaries](summaries/)
 
 ## 📚 Archive by Period
 
@@ -319,7 +320,7 @@ title: 📰 {month_name} {year} Archive
 
 > News digests from {month_name} {year}
 
-[← Back to Archive](../../) | [← Back to Home](../../../)
+[← Back to Archive](../../) | [← Back to Home](../../../) | [📊 View Summary](summary.html)
 
 ## 📅 Digests
 
