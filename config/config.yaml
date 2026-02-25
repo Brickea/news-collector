@@ -155,7 +155,7 @@ output:
   # Sub-directory used for archived digests
   archive_dir: docs/archive
   # Maximum articles fetched per source (can be overridden per source)
-  max_items_per_source: 10
+  max_items_per_source: 5
 
 # ------------------------------------------------------------
 # Archive settings
