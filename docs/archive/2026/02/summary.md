@@ -12,19 +12,19 @@ title: 📊 February 2026 Summary
 ## 📈 Overview
 
 - **Total Days**: 3
-- **Total Articles**: 294
-- **Average Articles per Day**: 98
+- **Total Articles**: 222
+- **Average Articles per Day**: 74
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 114
+- **Articles**: 87
 - **Sources**: AI News, Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 80
+- **Articles**: 60
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 💼 Business & Finance
@@ -34,17 +34,17 @@ title: 📊 February 2026 Summary
 
 ### 🌍 World News
 
-- **Articles**: 30
-- **Sources**: BBC News, CNN Top Stories
+- **Articles**: 15
+- **Sources**: BBC News
 
 ### 🏥 Health
 
-- **Articles**: 20
+- **Articles**: 15
 - **Sources**: WHO News
 
 ### 🔭 Science
 
-- **Articles**: 20
+- **Articles**: 15
 - **Sources**: NASA Breaking News
 
 ## 📅 Daily Summaries
@@ -67,14 +67,14 @@ title: 📊 February 2026 Summary
 
 ### [2026-02-25](../2026-02-25.html) - Wednesday
 
-**147 articles** collected from:
+**75 articles** collected from:
 
-- 🔬 Technology & AI: 57 articles
-- 💻 Coding & Development: 40 articles
+- 🔬 Technology & AI: 30 articles
+- 💻 Coding & Development: 20 articles
 - 💼 Business & Finance: 10 articles
-- 🌍 World News: 20 articles
-- 🏥 Health: 10 articles
-- 🔭 Science: 10 articles
+- 🌍 World News: 5 articles
+- 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
 
 ---
 
