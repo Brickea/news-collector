@@ -7,7 +7,7 @@ title: 📊 February 2026 Summary
 
 > News digest summary for February 2026
 
-[← Back to Summaries](../../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)
+[← Back to Summaries](../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)
 
 ## 📈 Overview
 
@@ -49,12 +49,12 @@ title: 📊 February 2026 Summary
 
 ## 📅 Daily Summaries
 
-### [2026-02-23](../2026-02-23.html) - Monday
+### [2026-02-23](2026-02-23.html) - Monday
 
 **0 articles** collected from:
 
 
-### [2026-02-24](../2026-02-24.html) - Tuesday
+### [2026-02-24](2026-02-24.html) - Tuesday
 
 **147 articles** collected from:
 
@@ -65,7 +65,7 @@ title: 📊 February 2026 Summary
 - 🏥 Health: 10 articles
 - 🔭 Science: 10 articles
 
-### [2026-02-25](../2026-02-25.html) - Wednesday
+### [2026-02-25](2026-02-25.html) - Wednesday
 
 **75 articles** collected from:
 
@@ -76,7 +76,7 @@ title: 📊 February 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-02-26](../2026-02-26.html) - Thursday
+### [2026-02-26](../../../2026-02-26.html) - Thursday
 
 **75 articles** collected from:
 
@@ -86,6 +86,91 @@ title: 📊 February 2026 Summary
 - 🌍 World News: 10 articles
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
+
+#### 📝 精选摘要 · 2026-02-26
+
+##### 🔬 科技 & AI
+
+- **AI 初创融资与收购继续升温**：Gushwork 获 900 万美元种子轮融资，押注 AI 搜索获客；Anthropic 收购 Vercept（电脑操作型 AI 代理），背景是 Meta 挖走其创始人之一。
+- **Nvidia 再创新高**：季度营收与资本支出均破纪录，黄仁勋称"全球对 tokens 的需求呈指数级增长"。
+- **美国政府与科技监管**：白宫希望 AI 公司承担电费上涨；CISA 在预算削减下陷入困境，被指无法应对危机。
+- **AI 安全与伦理**：MIT Tech Review 揭露人形机器人背后的人工劳动；微软推出新计划验证线上内容真伪；DeepMind 呼吁审视 LLM 的"道德行为"。
+- **AI 产业趋势**：Nokia + AWS 测试 AI 实时管理 5G 网络切片；Claude 面临海外实验室"工业级蒸馏攻击"；企业探索"断网云"以满足监管要求；AI 财务代理（Agentic Finance）成为新趋势。
+
+##### 💻 开发 & 编程
+
+- **GitHub Trending**：大量与 AI 代理、系统提示、Web 抓取、独立浏览器相关的开源项目上榜。
+- **Dev.to 热文**：一天内将 Next.js 应用做成六国语言；使用 Claude 设计完整 1 人 SaaS 的实战经验；从 RLHF 到社区驱动的 AI 训练新路径。
+- **Stack Overflow Blog**：新版 Stack Overflow 体验预览；OpenAI Codex 团队如何"dogfood"构建安全的 agentic SDLC；上传文件安全、维基数据向量化、按抓取付费模式等话题。
+- **CSS‑Tricks**：CSS 漏洞 CVE‑2026‑2441 分析；Bookmarklets 完整指南；SVG vs Raster 加载策略；Tailwind 中组件与工具类的边界。
+
+##### 💼 商业 & 金融
+
+- Nvidia 年营收首次突破 2000 亿美元，受 AI 投资热潮推动。
+- Salesforce CEO 否认"AI 导致 SaaS 末日"，但公司收入预期低于华尔街。
+- 德意志银行被曝为 Epstein"铺红毯"，尽管存在合规风险。
+- FT 深度报道：现代战争在乌克兰、伊拉克、阿富汗表现出"失效"趋势。
+- 高盛前 CEO Blankfein 回忆录出版。
+
+##### 🌍 国际新闻
+
+- 墨西哥锡那罗亚州暴力升级，贩毒集团内斗导致城市如战区。
+- 英国产妇护理系统被指存在系统性失败，涉及种族主义与员工关系恶化。
+- 尼泊尔去年抗议中 19 人被枪杀，BBC 揭露警方命令是关键因素。
+
+##### 🏥 健康（WHO）
+
+- 世卫组织总干事访问约旦，强调在 UHC、心理健康等领域的合作。
+- 2025 年乌克兰医疗设施遭攻击次数增加 20%。
+- 利比亚成功消除沙眼作为公共卫生问题。
+- 各国就《流行病协议》关键附件展开谈判。
+
+##### 🔭 科学（NASA）
+
+- NASA 安全咨询小组发布 2025 年年度报告，指出多项结构性挑战。
+- 新的 Webb 望远镜图像揭示"颅骨星云"细节。
+- 2 月下旬北半球可观测"六行星同现"。
+- Crew‑12 成员成功进入国际空间站。
+
+---
+
+#### 🎯 深度解读 · AI / Agent / Unix 工具链
+
+##### 🤖 AI 模型架构趋势
+
+**(A) Claude 遭遇"工业级蒸馏攻击"**
+
+海外实验室用 2.4 万个欺骗账号、1600 万轮对话对 Claude 进行能力抽取，目标是"获取专有推理逻辑"。说明：模型能力的核心壁垒正在被系统性削弱；大模型的"行为层"比"参数层"更容易被复制。工程启示：企业将更依赖推理时安全（runtime security）；模型 API 需要更强的行为水印、反蒸馏检测、对抗式审计。
+
+**(B) "断网云"（Disconnected Cloud）成为新基础设施形态**
+
+企业在监管压力下构建无外网、隔离式云环境，目标涵盖数据治理、合规与关键业务连续性。这类架构要求模型具备本地推理能力、可控的模型更新机制和无遥测依赖的 agent 执行环境。未来模型架构会更像"可插拔组件"：推理引擎 + 工具调用层 + 安全沙箱 + 审计层。
+
+**(C) 物理 AI（Physical AI）时代的隐性成本**
+
+人形机器人背后隐藏大量人工标注、远程操控、人工干预，说明物理 AI 的"智能"很大部分来自人类在环（HITL）。这会推动小型化、低延迟模型的发展，并反向影响 agent 设计。
+
+##### 🔗 Agent 技术趋势
+
+**(A) Anthropic 收购 Vercept：电脑操作型 Agent 成为主战场**
+
+Vercept 的核心能力是像人一样操作电脑、在 GUI 应用中执行任务，意味着 agent 不再局限于 API，而是进入真实操作系统层。Agent 架构需要视觉理解、UI 语义建模、状态恢复和长上下文记忆。
+
+**(B) Agentic Finance：AI 代理开始接管企业流程**
+
+发票、对账、审批等流程已开始自动化。Agent 架构必须具备任务图（Task Graph）、状态机（FSM）和事务性执行（Transactional Execution），与 Unix 工具链的"可组合性"高度一致。
+
+**(C) GitHub Trending：Agent 技能框架（Superpowers）崛起**
+
+`obra/superpowers` 提供"技能（skills）"作为可组合模块，形成 agent 的软件开发方法论，即 agent 的"Unix 哲学化"：小而清晰的能力、可组合、可审计、可替换。
+
+##### 🛠️ Unix 工具链趋势
+
+**(A) 通过 CLI 让 MCP 更便宜**：MCP（Model Context Protocol）在复杂场景下成本高，CLI 工具链可以显著降低 agent 的上下文开销。Unix 工具链的"文本即接口"仍然是最强的 agent 运行环境。
+
+**(B) Ladybird：真正独立的浏览器**：不依赖 Chromium，不依赖 WebKit，可以在"可控、可审计"的浏览器中运行 agent，对安全敏感的 agent（如金融、企业自动化）非常关键。
+
+**(C) Scrapling：自适应爬虫框架**：支持 CLI、MCP、代理轮换，说明 Agent 的"数据采集层"正在被模块化，Unix 工具链 + Agent = 新一代自动化流水线。
 
 ---
 

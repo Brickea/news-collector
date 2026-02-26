@@ -128,13 +128,14 @@ def generate_digest_summary(digest_info: dict) -> str:
     return '\n'.join(lines)
 
 
-def generate_period_summary(period_digests: list[dict], year: int, month: int) -> str:
+def generate_period_summary(period_digests: list[dict], year: int, month: int, docs_dir: Path | None = None) -> str:
     """Generate a summary for a specific period (month).
 
     Args:
         period_digests: List of digest information for the period
         year: Year
         month: Month (1-12)
+        docs_dir: Base docs directory path for computing relative links
 
     Returns:
         Summary markdown content
@@ -171,7 +172,7 @@ def generate_period_summary(period_digests: list[dict], year: int, month: int) -
         "",
         f"> News digest summary for {month_name} {year}",
         "",
-        f"[← Back to Summaries](../../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)",
+        f"[← Back to Summaries](../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)",
         "",
         "## 📈 Overview",
         "",
@@ -204,9 +205,14 @@ def generate_period_summary(period_digests: list[dict], year: int, month: int) -
         day_name = digest['date'].strftime('%A')
         article_count = digest['article_count']
 
-        # Link to the actual digest
-        digest_path = digest['file_path'].name.replace('.md', '.html')
-        lines.append(f"### [{date_str}](../{digest_path}) - {day_name}")
+        # Link to the actual digest - compute relative path from summary dir to digest
+        if docs_dir is not None:
+            period_dir = docs_dir / 'archive' / str(year) / f"{month:02d}"
+            digest_html = digest['file_path'].with_suffix('.html')
+            digest_link = os.path.relpath(digest_html, period_dir)
+        else:
+            digest_link = digest['file_path'].name.replace('.md', '.html')
+        lines.append(f"### [{date_str}]({digest_link}) - {day_name}")
         lines.append("")
         lines.append(f"**{article_count} articles** collected from:")
         lines.append("")
@@ -258,7 +264,7 @@ def generate_summary_index(all_summaries: list[tuple[int, int, int]]) -> str:
 
     for year, month, count in sorted_summaries:
         month_name = datetime(year, month, 1).strftime('%B')
-        summary_path = f"../../{year}/{month:02d}/summary.html"
+        summary_path = f"../{year}/{month:02d}/summary.html"
         lines.append(f"- [{month_name} {year}]({summary_path}) - {count} digests")
 
     lines.extend([
@@ -334,7 +340,7 @@ def main():
         period_dir.mkdir(parents=True, exist_ok=True)
 
         # Generate summary
-        summary_content = generate_period_summary(period_digests, year, month)
+        summary_content = generate_period_summary(period_digests, year, month, docs_dir=docs_dir)
         summary_path = period_dir / 'summary.md'
 
         with open(summary_path, 'w', encoding='utf-8') as f:

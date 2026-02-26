@@ -327,7 +327,7 @@ class TestGenerateSummaryIndex:
         assert 'December 2025' in index
 
         # Check link format
-        assert '(../../2026/02/summary.html)' in index
+        assert '(../2026/02/summary.html)' in index
         assert '5 digests' in index
         assert '10 digests' in index
 
