@@ -16,6 +16,10 @@ title: 📰 February 2026 Archive
 - [2026-02-24](2026-02-24.html) - Tuesday
 - [2026-02-23](2026-02-23.html) - Monday
 
+## 📖 Reading Notes
+
+- [2026-02-26 · 深度知识图谱](2026-02-26-reading-notes.html) - Structured knowledge graph from personal reading session
+
 ---
 
 <div style="text-align: center; padding: 2rem 0; color: #666;">
