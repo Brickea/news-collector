@@ -1,9 +1,9 @@
 name: Collect News
 
 on:
-  # Run every day at 08:00 UTC
+  # Run every day at 08:00 CST (Beijing time, UTC+8 = 00:00 UTC)
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 0 * * *"
 
   # Allow manual trigger from the GitHub Actions UI
   workflow_dispatch:
