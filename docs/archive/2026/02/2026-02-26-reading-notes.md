@@ -6,6 +6,7 @@ title: 📖 Reading Notes · 2026-02-26
 <div style="margin-bottom: 1rem;">
   <a href="/news-collector/" style="display: inline-block; padding: 0.5rem 1rem; background: #667eea; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem;">← Back to Home</a>
   <a href="index.html" style="display: inline-block; padding: 0.5rem 1rem; background: #764ba2; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9rem; margin-left: 0.5rem;">← Back to February 2026</a>
+  <a href="2026-02-26-knowledge-graph.html" style="display: inline-block; padding: 0.5rem 1rem; background: #43e97b; color: #1a1a2e; text-decoration: none; border-radius: 4px; font-size: 0.9rem; margin-left: 0.5rem;">🕸 交互式知识图谱 →</a>
 </div>
 
 # 📖 今日新闻阅读 — 深度知识图谱 · 2026-02-26

@@ -18,7 +18,8 @@ title: 📰 February 2026 Archive
 
 ## 📖 Reading Notes
 
-- [2026-02-26 · 深度知识图谱](2026-02-26-reading-notes.html) - Structured knowledge graph from personal reading session
+- [2026-02-26 · 深度知识图谱（文字版）](2026-02-26-reading-notes.html) - Structured knowledge graph from personal reading session
+- [2026-02-26 · 知识图谱（交互式网络视图）](2026-02-26-knowledge-graph.html) - Interactive D3.js force-directed knowledge graph
 
 ---
 
