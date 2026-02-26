@@ -7,7 +7,7 @@ title: 📊 February 2026 Summary
 
 > News digest summary for February 2026
 
-[← Back to Summaries](../../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)
+[← Back to Summaries](../../summaries/) | [← Back to Archive](../../) | [← Back to Home](../../../)
 
 ## 📈 Overview
 
@@ -49,12 +49,12 @@ title: 📊 February 2026 Summary
 
 ## 📅 Daily Summaries
 
-### [2026-02-23](../2026-02-23.html) - Monday
+### [2026-02-23](2026-02-23.html) - Monday
 
 **0 articles** collected from:
 
 
-### [2026-02-24](../2026-02-24.html) - Tuesday
+### [2026-02-24](2026-02-24.html) - Tuesday
 
 **147 articles** collected from:
 
@@ -65,7 +65,7 @@ title: 📊 February 2026 Summary
 - 🏥 Health: 10 articles
 - 🔭 Science: 10 articles
 
-### [2026-02-25](../2026-02-25.html) - Wednesday
+### [2026-02-25](2026-02-25.html) - Wednesday
 
 **75 articles** collected from:
 
@@ -76,7 +76,7 @@ title: 📊 February 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-02-26](../2026-02-26.html) - Thursday
+### [2026-02-26](../../../2026-02-26.html) - Thursday
 
 **75 articles** collected from:
 
