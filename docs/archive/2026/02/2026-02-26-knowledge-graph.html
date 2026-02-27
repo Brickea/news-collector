@@ -126,6 +126,46 @@
       transition: background 0.15s;
     }
     #controls button:hover { background: #2d3154; }
+
+    /* ── Mobile responsive ── */
+    @media (max-width: 600px) {
+      header {
+        padding: 0.45rem 0.75rem;
+        gap: 0.5rem;
+      }
+      header h1 { font-size: 0.9rem; }
+      header p  { display: none; }
+      .header-links a {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.55rem;
+      }
+      main {
+        flex-direction: column-reverse;
+      }
+      #legend {
+        width: 100%;
+        max-height: 28vh;
+        border-left: none;
+        border-top: 1px solid #2d3154;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        padding: 0.5rem 0.75rem;
+      }
+      #legend h3 { width: 100%; margin-bottom: 0.1rem; }
+      #legend hr { display: none; }
+      #legend .hint { display: none; }
+      .legend-item { font-size: 0.72rem; padding: 0.15rem 0.4rem; }
+      #controls {
+        bottom: 0.5rem;
+        left: 0.5rem;
+      }
+      #controls button {
+        padding: 0.25rem 0.55rem;
+        font-size: 0.72rem;
+      }
+      #tooltip { max-width: min(260px, 85vw); font-size: 0.74rem; }
+    }
   </style>
 </head>
 <body>
@@ -213,7 +253,7 @@ const ARTICLES = [
   { id: "java",      cat: "cat-proj", label: "Java 学习\n2026-02-25",     url: "https://brickea.github.io/daily-program/java/daily/2026-02-25.html", desc: "日常学习笔记与生态更新，快速采用新版本或库的支撑。" },
 
   // ── Deep Dives ──
-  { id: "find-tc",   cat: "cat-deep", label: "GNU find\n图灵完备性",      url: "https://arxiv.org/abs/2602.20762", desc: "理论证明 find 命令可模拟图灵机，提示"工具链即语言"的工程自动化潜力。" },
+  { id: "find-tc",   cat: "cat-deep", label: "GNU find\n图灵完备性",      url: "https://arxiv.org/abs/2602.20762", desc: "理论证明 find 命令可模拟图灵机，提示「工具链即语言」的工程自动化潜力。" },
   { id: "hendrix",   cat: "cat-deep", label: "Jimi Hendrix\n系统工程",    url: "https://spectrum.ieee.org/jimi-hendrix-systems-engineer", desc: "从工程视角解析音频链路，系统思维可迁移到 Agent 设计。" },
   { id: "trust-gap", cat: "cat-deep", label: "AI 信任\n差距分析",          url: "https://stackoverflow.blog/2026/02/18/closing-the-developer-ai-trust-gap", desc: "开发者对 AI 的信任下降但使用上升，优先考虑可解释性与错误恢复。" },
 ];
