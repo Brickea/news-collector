@@ -11,6 +11,8 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+MAX_RECENT_KNOWLEDGE_GRAPHS = 10
+
 
 def find_digest_files(docs_dir: Path) -> list[tuple[datetime, str]]:
     """Find all digest markdown files in docs directory.
@@ -54,11 +56,12 @@ def find_digest_files(docs_dir: Path) -> list[tuple[datetime, str]]:
     return digests
 
 
-def generate_index_content(digests: list[tuple[datetime, str]]) -> str:
+def generate_index_content(digests: list[tuple[datetime, str]], docs_dir: Path | None = None) -> str:
     """Generate the index.md content with all digest links.
 
     Args:
         digests: List of (date, path) tuples sorted by date
+        docs_dir: Base docs directory path (used to locate knowledge graph files)
 
     Returns:
         Full content of index.md as string
@@ -115,6 +118,45 @@ def generate_index_content(digests: list[tuple[datetime, str]]) -> str:
         archive_section.append(f"- [{info['display']}]({archive_path}) - {count} digest{'s' if count > 1 else ''}")
 
     archive_list_text = '\n'.join(archive_section) if archive_section else "- No archived digests yet"
+
+    # Build knowledge graph section (scan all period directories)
+    kg_entries: list[tuple[datetime, str, str, str]] = []  # (date, notes_html, graph_html, period_path)
+    if docs_dir is not None:
+        archive_root = docs_dir / 'archive'
+        if archive_root.exists():
+            for period_dir in sorted(archive_root.glob('*/*'), reverse=True):
+                if period_dir.is_dir():
+                    for date, notes_name, graph_name in find_knowledge_graph_files(period_dir):
+                        rel_period = period_dir.relative_to(docs_dir)
+                        notes_html = str(rel_period / notes_name.replace('.md', '.html'))
+                        graph_html = str(rel_period / graph_name) if graph_name else ""
+                        kg_entries.append((date, notes_html, graph_html, str(rel_period)))
+    kg_entries.sort(key=lambda x: x[0], reverse=True)
+
+    kg_section = ""
+    if kg_entries:
+        kg_lines = []
+        for date, notes_html, graph_html, _ in kg_entries[:MAX_RECENT_KNOWLEDGE_GRAPHS]:
+            date_str = date.strftime('%Y-%m-%d')
+            line = f"- 🕸 [{date_str} · Interactive Knowledge Graph]({graph_html})" if graph_html else f"- 📄 [{date_str} · Reading Notes]({notes_html})"
+            if graph_html:
+                line += f" · [📄 Reading Notes]({notes_html})"
+            kg_lines.append(line)
+        kg_section = f"""
+## 📖 Personal Knowledge Graphs
+
+A personal workflow for organizing daily reading into interactive knowledge maps:
+
+<div style="padding: 1rem; background: #f0f4ff; border-radius: 8px; border-left: 4px solid #667eea; margin: 1rem 0;">
+  <strong>🕸 Knowledge Graph Workflow</strong><br/>
+  <p style="margin: 0.5rem 0 0.5rem 0; font-size: 0.9rem;">Read the daily digest → organize your personal reading notes → the agent generates an interactive knowledge graph visualization.</p>
+  <a href="guides/contributing-knowledge-graph.html" style="color: #667eea; font-weight: 500;">📋 Contribution Guide & Format →</a>
+</div>
+
+Recent knowledge graphs:
+
+{chr(10).join(kg_lines)}
+"""
 
     # Get today's date for the latest digest link
     today = datetime.now().strftime('%Y-%m-%d')
@@ -197,13 +239,14 @@ Our news digest covers the following categories:
 - **Chinese Translations** - AI-powered translations for non-Chinese content
 - **Beautiful Cover Images** - NASA Astronomy Picture of the Day
 - **Rich Markdown Format** - Clean, readable layout with visual separators
-
+{kg_section}
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/Brickea/news-collector) - View the source code and configuration
 - [Latest Digest]({latest_digest_html}) - Today's news
 - [Archive](archive/) - Browse past digests
 - [📊 Summaries](archive/summaries/) - Monthly digest summaries
+- [📖 Knowledge Graph Guide](guides/contributing-knowledge-graph.html) - How to contribute personal reading notes
 
 ---
 
@@ -283,6 +326,36 @@ title: 📰 News Archive
     return content
 
 
+def find_knowledge_graph_files(period_dir: Path) -> list[tuple[datetime, str, str]]:
+    """Find all personal reading-notes / knowledge-graph file pairs in a period directory.
+
+    Returns:
+        List of tuples (date, notes_filename, graph_filename) sorted by date (newest first).
+        graph_filename is an empty string when the HTML file is absent.
+    """
+    notes_pattern = re.compile(r'^(\d{4}-\d{2}-\d{2})-reading-notes\.md$')
+    pairs: list[tuple[datetime, str, str]] = []
+
+    if not period_dir.exists():
+        return pairs
+
+    for notes_file in period_dir.glob('*-reading-notes.md'):
+        match = notes_pattern.match(notes_file.name)
+        if not match:
+            continue
+        date_str = match.group(1)
+        try:
+            date = datetime.strptime(date_str, '%Y-%m-%d')
+        except ValueError:
+            continue
+        graph_name = f"{date_str}-knowledge-graph.html"
+        graph_file = period_dir / graph_name
+        pairs.append((date, notes_file.name, graph_name if graph_file.exists() else ""))
+
+    pairs.sort(reverse=True)
+    return pairs
+
+
 def generate_period_index(year: int, month: int, period_digests: list[tuple[datetime, str]], docs_dir: Path) -> str:
     """Generate archive/YYYY/MM/index.md content for a specific period.
 
@@ -311,6 +384,21 @@ def generate_period_index(year: int, month: int, period_digests: list[tuple[date
 
     digest_list_text = '\n'.join(digest_section) if digest_section else "- No digests for this period"
 
+    # Build reading notes / knowledge graph section
+    period_dir = docs_dir / 'archive' / str(year) / f"{month:02d}"
+    kg_files = find_knowledge_graph_files(period_dir)
+    reading_notes_section = ""
+    if kg_files:
+        lines = []
+        for date, notes_name, graph_name in kg_files:
+            date_str = date.strftime('%Y-%m-%d')
+            notes_html = notes_name.replace('.md', '.html')
+            entry = f"- [{date_str} · 深度知识图谱（文字版）]({notes_html}) - Structured knowledge graph from personal reading session"
+            if graph_name:
+                entry += f"\n- [{date_str} · 知识图谱（交互式网络视图）]({graph_name}) - Interactive D3.js force-directed knowledge graph"
+            lines.append(entry)
+        reading_notes_section = "\n## 📖 Reading Notes\n\n" + '\n'.join(lines) + "\n"
+
     content = f"""---
 layout: default
 title: 📰 {month_name} {year} Archive
@@ -325,7 +413,7 @@ title: 📰 {month_name} {year} Archive
 ## 📅 Digests
 
 {digest_list_text}
-
+{reading_notes_section}
 ---
 
 <div style="text-align: center; padding: 2rem 0; color: #666;">
@@ -358,7 +446,7 @@ def main():
 
     # Generate main index content
     print("Generating index.md...")
-    content = generate_index_content(digests)
+    content = generate_index_content(digests, docs_dir)
 
     # Write to index.md
     index_path = docs_dir / 'index.md'
