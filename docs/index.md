@@ -77,17 +77,32 @@ Our news digest covers the following categories:
 - **Beautiful Cover Images** - NASA Astronomy Picture of the Day
 - **Rich Markdown Format** - Clean, readable layout with visual separators
 
+## 📖 Personal Knowledge Graphs
+
+A personal workflow for organizing daily reading into interactive knowledge maps:
+
+<div style="padding: 1rem; background: #f0f4ff; border-radius: 8px; border-left: 4px solid #667eea; margin: 1rem 0;">
+  <strong>🕸 Knowledge Graph Workflow</strong><br/>
+  <p style="margin: 0.5rem 0 0.5rem 0; font-size: 0.9rem;">Read the daily digest → organize your personal reading notes → the agent generates an interactive knowledge graph visualization.</p>
+  <a href="guides/contributing-knowledge-graph.html" style="color: #667eea; font-weight: 500;">📋 Contribution Guide & Format →</a>
+</div>
+
+Recent knowledge graphs:
+
+- 🕸 [2026-02-26 · Interactive Knowledge Graph](archive/2026/02/2026-02-26-knowledge-graph.html) · [📄 Reading Notes](archive/2026/02/2026-02-26-reading-notes.html)
+
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/Brickea/news-collector) - View the source code and configuration
 - [Latest Digest](2026-02-27.html) - Today's news
 - [Archive](archive/) - Browse past digests
 - [📊 Summaries](archive/summaries/) - Monthly digest summaries
+- [📖 Knowledge Graph Guide](guides/contributing-knowledge-graph.html) - How to contribute personal reading notes
 
 ---
 
 <div style="text-align: center; padding: 2rem 0; color: #666;">
   <p>📰 Powered by <a href="https://github.com/Brickea/news-collector">news-collector</a></p>
   <p style="font-size: 0.9rem;">Automatically updated daily via GitHub Actions</p>
-  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-27 00:46 UTC</p>
+  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Last updated: 2026-02-27 02:33 UTC</p>
 </div>
