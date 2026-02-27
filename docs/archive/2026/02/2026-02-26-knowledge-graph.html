@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📖 知识图谱 · 2026-02-26</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f1117;
+      color: #e6e6ef;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 0.7rem 1.2rem;
+      background: #1a1d2e;
+      border-bottom: 1px solid #2d3154;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    header h1 { font-size: 1.05rem; font-weight: 600; color: #a8b4ff; }
+    header p  { font-size: 0.78rem; color: #8890b0; }
+    .header-links { display: flex; gap: 0.6rem; margin-left: auto; flex-wrap: wrap; }
+    .header-links a {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .btn-home  { background: #667eea; }
+    .btn-notes { background: #764ba2; }
+
+    /* ── Main layout ── */
+    main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Graph area ── */
+    #graph-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    svg { width: 100%; height: 100%; display: block; }
+
+    /* ── Legend ── */
+    #legend {
+      width: 200px;
+      flex-shrink: 0;
+      background: #1a1d2e;
+      border-left: 1px solid #2d3154;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    #legend h3 { font-size: 0.8rem; color: #8890b0; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: #c0c8e0; cursor: pointer; padding: 0.2rem 0; border-radius: 3px; transition: background 0.15s; }
+    .legend-item:hover { background: #252840; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    #legend hr { border: none; border-top: 1px solid #2d3154; margin: 0.4rem 0; }
+    #legend .hint { font-size: 0.7rem; color: #606880; line-height: 1.5; }
+
+    /* ── Tooltip ── */
+    #tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: #1e2236;
+      border: 1px solid #3a4070;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      max-width: 280px;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: #d0d8f0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 100;
+    }
+    #tooltip .tt-title { font-weight: 600; color: #a8b4ff; margin-bottom: 0.35rem; font-size: 0.82rem; }
+    #tooltip .tt-type  { font-size: 0.7rem; color: #6070a0; margin-bottom: 0.4rem; }
+    #tooltip .tt-desc  { color: #b0bcd0; }
+    #tooltip .tt-link  { margin-top: 0.4rem; font-size: 0.7rem; color: #667eea; }
+
+    /* ── Node styles (set via JS fill) ── */
+    .node circle { stroke: #0f1117; stroke-width: 2px; cursor: pointer; transition: filter 0.15s; }
+    .node circle:hover { filter: brightness(1.35) drop-shadow(0 0 6px currentColor); }
+    .node text { pointer-events: none; fill: #d8e0f8; text-anchor: middle; dominant-baseline: central; }
+
+    /* ── Link styles ── */
+    .link { stroke: #3a4070; stroke-opacity: 0.55; fill: none; }
+    .link.cross { stroke: #8890b0; stroke-opacity: 0.35; stroke-dasharray: 4 3; }
+
+    /* Controls */
+    #controls {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+    #controls button {
+      background: #1e2236;
+      border: 1px solid #3a4070;
+      color: #a8b4ff;
+      border-radius: 4px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #controls button:hover { background: #2d3154; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>📖 知识图谱 · 2026-02-26</h1>
+    <p>今日新闻阅读 — 深度知识图谱（交互式网络视图）</p>
+  </div>
+  <div class="header-links">
+    <a class="btn-home"  href="/news-collector/">← 首页</a>
+    <a class="btn-notes" href="2026-02-26-reading-notes.html">📄 文字版</a>
+  </div>
+</header>
+
+<main>
+  <div id="graph-container">
+    <svg id="graph"></svg>
+    <div id="tooltip"></div>
+    <div id="controls">
+      <button id="btn-reset">重置视图</button>
+      <button id="btn-freeze">暂停布局</button>
+    </div>
+  </div>
+
+  <nav id="legend">
+    <h3>主题节点</h3>
+    <!-- populated by JS -->
+    <hr/>
+    <p class="hint">
+      🖱 拖动节点<br/>
+      🔍 滚轮缩放<br/>
+      👆 点击打开链接<br/>
+      🏷 悬停查看描述
+    </p>
+    <hr/>
+    <h3>连线类型</h3>
+    <div class="legend-item"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3a4070" stroke-width="2"/></svg> 从属关系</div>
+    <div class="legend-item"><svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#8890b0" stroke-width="1.5" stroke-dasharray="4 3"/></svg> 横切关联</div>
+  </nav>
+</main>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+const CATEGORIES = [
+  { id: "root",     label: "2026-02-26\n阅读会话",         color: "#ffffff", size: 28, group: 0 },
+  { id: "cat-ai",   label: "🤖 Agentic AI\n技术生态",       color: "#667eea", size: 22, group: 1 },
+  { id: "cat-sec",  label: "🔒 Agent\n安全与记忆",          color: "#f5a623", size: 22, group: 2 },
+  { id: "cat-eng",  label: "🛠 软件工程\nCI/CD",            color: "#43e97b", size: 22, group: 3 },
+  { id: "cat-biz",  label: "💼 行业冲击\n商业模式",          color: "#fa709a", size: 22, group: 4 },
+  { id: "cat-proj", label: "🧑‍💻 个人项目\n学习轨迹",          color: "#4facfe", size: 22, group: 5 },
+  { id: "cat-deep", label: "🔭 深度旁支\n学术趣味",          color: "#a29bfe", size: 22, group: 6 },
+];
+
+const ARTICLES = [
+  // ── Agentic AI ──
+  { id: "cowork",    cat: "cat-ai",   label: "Anthropic\nCowork",       url: "https://venturebeat.com/technology/anthropic-launches-cowork-a-claude-desktop-agent-that-works-in-your-files-no", desc: "桌面级 Agent，可在本地文件与工作流中执行任务，降低上手门槛，代表 Agent 向非工程用户扩展的趋势。" },
+  { id: "sysprompt", cat: "cat-ai",   label: "System Prompts\nCollection", url: "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main", desc: "汇总多家工具与内部系统提示的仓库，适合做 prompt-engineering 参考与对比测试。" },
+  { id: "ctx-mode",  cat: "cat-ai",   label: "Claude\nContext Mode",    url: "https://github.com/mksglu/claude-context-mode", desc: "解决大输出导致上下文丢失的工具，提示长对话或大文档处理的工程实践。" },
+  { id: "cost-cmp",  cat: "cat-ai",   label: "Claude Code\nvs 替代品",   url: "https://brickea.github.io/news-collector/archive/2026/02/2026-02-25.html", desc: "市场上存在付费与免费替代方案，影响企业部署决策与 TCO 评估。" },
+
+  // ── Security & Memory ──
+  { id: "clawmoat",  cat: "cat-sec",  label: "ClawMoat",                url: "https://dev.to/darbogach/clawmoat-vs-llamafirewall-vs-nemo-guardrails-which-open-source-ai-agent-security-tool-should-you-128h", desc: "主机级监控策略，适合在 Agent 部署前做威胁建模。" },
+  { id: "llamafw",   cat: "cat-sec",  label: "LlamaFirewall",           url: "https://dev.to/darbogach/clawmoat-vs-llamafirewall-vs-nemo-guardrails-which-open-source-ai-agent-security-tool-should-you-128h", desc: "注入检测防护策略，检测 prompt injection 攻击。" },
+  { id: "nemo",      cat: "cat-sec",  label: "NeMo\nGuardrails",        url: "https://dev.to/darbogach/clawmoat-vs-llamafirewall-vs-nemo-guardrails-which-open-source-ai-agent-security-tool-should-you-128h", desc: "对话级约束 DSL，用声明式规则约束 LLM 行为边界。" },
+  { id: "mem-arch",  cat: "cat-sec",  label: "AI Agent\nMemory 架构",   url: "https://dev.to/oblivionlabz/building-ai-agent-memory-architecture-a-deep-dive-into-llm-state-management-for-power-users-h8m", desc: "将记忆分为 Working / Episodic / Semantic / Procedural 四层，对长期任务 Agent 设计有直接指导意义。" },
+
+  // ── Engineering ──
+  { id: "actions-tc",cat: "cat-eng",  label: "GitHub Actions\n图灵完备性", url: "https://github.com/Brickea/interesting-thought/blob/main/ideas/tech-insights/001-github-actions-turing-completeness.md", desc: "展示 Actions 可被用作复杂控制流与自动化脚本，需注意可维护性与安全边界。" },
+  { id: "workflow",  cat: "cat-eng",  label: "daily-program\nWorkflow Runs", url: "https://github.com/Brickea/daily-program/actions", desc: "项目流水线运行记录，可作为验证 Agent 集成效果的第一手数据。" },
+  { id: "copilot",   cat: "cat-eng",  label: "GitHub Copilot\n工具集成", url: "https://github.com/copilot/c/05f637e8-6cea-43a0-bf0b-c76bf2fe4d90", desc: "关注 Copilot 与外部工具交互、OAuth 与 token 刷新流程，最小权限策略。" },
+  { id: "websocket", cat: "cat-eng",  label: "WebSocket\n调试案例",      url: "https://dev.to/combba/the-websocket-cascade-from-hell-3o1a", desc: "实战故障排查与架构选择经验，断线重连与熔断机制的 SRE 复盘。" },
+
+  // ── Industry & Business ──
+  { id: "cobol",     cat: "cat-biz",  label: "COBOL 现代化\n× AI",       url: "https://www.artificialintelligence-news.com/news/cobol-modernization-ai-claude-ibm", desc: "Agent/LLM 能显著加速遗留系统现代化，带来短期市场波动，影响传统供应商。" },
+  { id: "ag-fin",    cat: "cat-biz",  label: "Agentic\nFinance ROI",     url: "https://www.artificialintelligence-news.com/news/deploying-agentic-finance-ai-for-immediate-business-roi", desc: "金融行业试点可审计 Agent 流程，关注合规与审计链路设计。" },
+  { id: "crawl",     cat: "cat-biz",  label: "Pay-Per-Crawl\n商业模式",   url: "https://stackoverflow.blog/2026/02/19/stack-overflow-cloudflare-pay-per-crawl", desc: "Stack Overflow × Cloudflare 展示内容提供方与基础设施方的新型收益分配方式。" },
+  { id: "dogfood",   cat: "cat-biz",  label: "Dogfooding\nin SDLC",      url: "https://stackoverflow.blog/2026/02/24/dogfood-so-nutritious-it-s-building-the-future-of-sdlcs", desc: "内部使用推动工具成熟，形成闭环改进与更快的工程迭代。" },
+
+  // ── Personal ──
+  { id: "nc-agents", cat: "cat-proj", label: "news-collector\nAgents",   url: "https://github.com/Brickea/news-collector/agents?author=Brickea", desc: "包含配置的 Agent 列表与任务记录，是把外部趋势落地到工程实践的直接入口。" },
+  { id: "brief-run", cat: "cat-proj", label: "News Briefing\nAgent 记录", url: "https://github.com/Brickea/my-oh-my/actions/runs/22449181043/job/65012342888", desc: "查看具体运行日志与 job 详情，评估摘要质量、失败率与延迟。" },
+  { id: "java",      cat: "cat-proj", label: "Java 学习\n2026-02-25",     url: "https://brickea.github.io/daily-program/java/daily/2026-02-25.html", desc: "日常学习笔记与生态更新，快速采用新版本或库的支撑。" },
+
+  // ── Deep Dives ──
+  { id: "find-tc",   cat: "cat-deep", label: "GNU find\n图灵完备性",      url: "https://arxiv.org/abs/2602.20762", desc: "理论证明 find 命令可模拟图灵机，提示"工具链即语言"的工程自动化潜力。" },
+  { id: "hendrix",   cat: "cat-deep", label: "Jimi Hendrix\n系统工程",    url: "https://spectrum.ieee.org/jimi-hendrix-systems-engineer", desc: "从工程视角解析音频链路，系统思维可迁移到 Agent 设计。" },
+  { id: "trust-gap", cat: "cat-deep", label: "AI 信任\n差距分析",          url: "https://stackoverflow.blog/2026/02/18/closing-the-developer-ai-trust-gap", desc: "开发者对 AI 的信任下降但使用上升，优先考虑可解释性与错误恢复。" },
+];
+
+// Cross-cutting edges (横切关联)
+const CROSS_EDGES = [
+  { source: "actions-tc", target: "find-tc",   label: "都是图灵完备工具链" },
+  { source: "cowork",     target: "cost-cmp",  label: "Claude 生态成本对比" },
+  { source: "mem-arch",   target: "ag-fin",    label: "Finance Agent 需要记忆分层" },
+  { source: "nc-agents",  target: "brief-run", label: "同一项目体系" },
+  { source: "dogfood",    target: "nc-agents", label: "news-collector 即 dogfood" },
+  { source: "clawmoat",   target: "nemo",      label: "安全防护互补" },
+  { source: "llamafw",    target: "nemo",      label: "安全防护互补" },
+  { source: "trust-gap",  target: "mem-arch",  label: "可解释性 ← 记忆可审计" },
+  { source: "copilot",    target: "workflow",  label: "CI 凭证管理" },
+];
+
+// ─────────────────────────────────────────────
+//  BUILD GRAPH DATA
+// ─────────────────────────────────────────────
+const nodes = [
+  ...CATEGORIES.map(c => ({ ...c, type: c.id === "root" ? "root" : "category" })),
+  ...ARTICLES.map(a  => ({ ...a, type: "article", color: null /* inherit from cat */ })),
+];
+
+// Assign article colors from their category
+const catColorMap = Object.fromEntries(CATEGORIES.map(c => [c.id, c.color]));
+nodes.forEach(n => {
+  if (n.type === "article") {
+    n.color = catColorMap[n.cat] + "bb";  // slightly transparent
+    n.size = 12;
+  }
+});
+
+const links = [];
+// root → categories
+CATEGORIES.slice(1).forEach(c => links.push({ source: "root", target: c.id, type: "hierarchy" }));
+// categories → articles
+ARTICLES.forEach(a => links.push({ source: a.cat, target: a.id, type: "hierarchy" }));
+// cross edges
+CROSS_EDGES.forEach(e => links.push({ ...e, type: "cross" }));
+
+// ─────────────────────────────────────────────
+//  D3 SETUP
+// ─────────────────────────────────────────────
+const svg = d3.select("#graph");
+const container = document.getElementById("graph-container");
+const tooltip  = document.getElementById("tooltip");
+
+let width  = container.clientWidth;
+let height = container.clientHeight;
+
+const g = svg.append("g").attr("class", "scene");
+
+// Zoom
+const zoom = d3.zoom()
+  .scaleExtent([0.15, 4])
+  .on("zoom", e => g.attr("transform", e.transform));
+svg.call(zoom);
+
+// Simulation
+const simulation = d3.forceSimulation(nodes)
+  .force("link",   d3.forceLink(links).id(d => d.id).distance(d =>
+    d.source.type === "root" ? 170 : d.source.type === "category" ? 110 : 90
+  ).strength(0.6))
+  .force("charge", d3.forceManyBody().strength(d =>
+    d.type === "root" ? -900 : d.type === "category" ? -500 : -180
+  ))
+  .force("center", d3.forceCenter(width / 2, height / 2))
+  .force("collide", d3.forceCollide().radius(d => d.size + 16).strength(0.7));
+
+// ── Links ──
+const link = g.append("g").attr("class", "links")
+  .selectAll("line")
+  .data(links)
+  .join("line")
+  .attr("class", d => "link" + (d.type === "cross" ? " cross" : ""))
+  .attr("stroke-width", d => d.type === "cross" ? 1.2 : 1.5);
+
+// ── Nodes ──
+const node = g.append("g").attr("class", "nodes")
+  .selectAll("g")
+  .data(nodes)
+  .join("g")
+  .attr("class", "node")
+  .call(d3.drag()
+    .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag",  (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on("end",   (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; })
+  )
+  .on("click", (e, d) => {
+    if (d.url) { window.open(d.url, "_blank", "noopener"); }
+  })
+  .on("mouseover", (e, d) => {
+    const html = `
+      <div class="tt-title">${d.label.replace(/\n/g, " ")}</div>
+      <div class="tt-type">${d.type === "category" ? "主题节点" : d.type === "root" ? "根节点" : "文章 / 资源"}</div>
+      ${d.desc ? `<div class="tt-desc">${d.desc}</div>` : ""}
+      ${d.url  ? `<div class="tt-link">🔗 点击打开链接</div>` : ""}
+    `;
+    tooltip.innerHTML = html;
+    tooltip.style.display = "block";
+    moveTooltip(e);
+  })
+  .on("mousemove", moveTooltip)
+  .on("mouseout",  () => { tooltip.style.display = "none"; });
+
+// Circles
+node.append("circle")
+  .attr("r",    d => d.size)
+  .attr("fill", d => d.color)
+  .attr("stroke", d => d.type === "root" ? "#fff" : "transparent")
+  .attr("stroke-width", d => d.type === "root" ? 3 : 0);
+
+// Labels
+node.append("text")
+  .attr("dy", d => d.size + 12)
+  .attr("font-size", d => d.type === "root" ? "10px" : d.type === "category" ? "9px" : "8px")
+  .attr("font-weight", d => d.type !== "article" ? "600" : "400")
+  .attr("fill", "#c8d0e8")
+  .each(function(d) {
+    const parts = d.label.split("\n");
+    const el = d3.select(this);
+    el.text(null);
+    parts.forEach((p, i) => {
+      el.append("tspan")
+        .attr("x", 0)
+        .attr("dy", i === 0 ? 0 : "1.2em")
+        .text(p);
+    });
+  });
+
+// ── Tick ──
+simulation.on("tick", () => {
+  link
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => d.target.x)
+    .attr("y2", d => d.target.y);
+  node.attr("transform", d => `translate(${d.x},${d.y})`);
+});
+
+// ── Legend entries ──
+const legendEl = document.getElementById("legend");
+const legendHr = legendEl.querySelector("hr");
+CATEGORIES.slice(1).forEach(c => {
+  const div = document.createElement("div");
+  div.className = "legend-item";
+  div.innerHTML = `<span class="legend-dot" style="background:${c.color}"></span>${c.label.replace(/\n/g," ")}`;
+  div.addEventListener("click", () => highlightCategory(c.id));
+  legendEl.insertBefore(div, legendHr);
+});
+
+function highlightCategory(catId) {
+  node.select("circle")
+    .transition().duration(300)
+    .attr("opacity", d => (d.id === catId || d.cat === catId || d.id === "root") ? 1 : 0.18);
+  link
+    .transition().duration(300)
+    .attr("opacity", d => (d.source.id === catId || d.target.id === catId || d.source.cat === catId) ? 1 : 0.08);
+}
+
+// Click background resets highlight
+svg.on("click.bg", () => {
+  node.select("circle").transition().duration(300).attr("opacity", 1);
+  link.transition().duration(300).attr("opacity", 1);
+});
+
+// ── Controls ──
+document.getElementById("btn-reset").addEventListener("click", () => {
+  svg.transition().duration(600).call(
+    zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1)
+  );
+});
+let frozen = false;
+document.getElementById("btn-freeze").addEventListener("click", function() {
+  frozen = !frozen;
+  frozen ? simulation.stop() : simulation.restart();
+  this.textContent = frozen ? "▶ 恢复布局" : "暂停布局";
+});
+
+// ── Resize ──
+new ResizeObserver(() => {
+  width  = container.clientWidth;
+  height = container.clientHeight;
+  simulation.force("center", d3.forceCenter(width / 2, height / 2)).alpha(0.1).restart();
+}).observe(container);
+
+function moveTooltip(e) {
+  const pad = 16;
+  let x = e.clientX + pad;
+  let y = e.clientY + pad;
+  if (x + 290 > window.innerWidth)  x = e.clientX - 290 - pad;
+  if (y + 180 > window.innerHeight) y = e.clientY - 180 - pad;
+  tooltip.style.left = x + "px";
+  tooltip.style.top  = y + "px";
+}
+</script>
+</body>
+</html>
