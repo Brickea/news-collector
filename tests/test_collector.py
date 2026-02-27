@@ -69,12 +69,14 @@ class TestGetDailyCoverImage:
         assert isinstance(result, tuple)
         assert len(result) == 3
 
-    def test_picsum_fallback_url_format(self):
-        # Since NASA API might not be accessible, test the Picsum fallback
+    def test_picsum_fallback_url_format(self, mocker):
+        # Force the NASA API to fail so we always exercise the Picsum fallback
+        mocker.patch("collector.request.urlopen", side_effect=Exception("blocked"))
         date = datetime(2026, 2, 24, tzinfo=timezone.utc)
         url, attribution, description = _get_daily_cover_image(date)
-        # URL should contain the date for consistency
-        assert "2026-02-24" in url or "picsum" in url.lower()
+        # Picsum URL contains the date-based seed for consistency
+        assert "picsum" in url.lower()
+        assert "2026-02-24" in url
         assert isinstance(attribution, str)
         assert len(attribution) > 0
         # Description should be present
