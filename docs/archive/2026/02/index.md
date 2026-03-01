@@ -11,7 +11,7 @@ title: 📰 February 2026 Archive
 
 ## 📅 Digests
 
-- [2026-02-28](../../../2026-02-28.html) - Saturday
+- [2026-02-28](../03/2026-02-28.html) - Saturday
 - [2026-02-27](2026-02-27.html) - Friday
 - [2026-02-26](2026-02-26.html) - Thursday
 - [2026-02-25](2026-02-25.html) - Wednesday

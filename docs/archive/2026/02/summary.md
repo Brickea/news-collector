@@ -98,7 +98,7 @@ title: 📊 February 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-02-28](../../../2026-02-28.html) - Saturday
+### [2026-02-28](../03/2026-02-28.html) - Saturday
 
 **75 articles** collected from:
 
