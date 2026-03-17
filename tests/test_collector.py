@@ -5,6 +5,7 @@ Run with:  pytest tests/
 """
 
 import sys
+import json
 import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,6 +23,8 @@ from collector import (  # noqa: E402
     _calculate_similarity,
     _deduplicate_articles,
     _get_daily_cover_image,
+    _is_chinese,
+    _translate_to_chinese,
     archive_old_files,
     fetch_rss,
     generate_markdown,
@@ -98,6 +101,108 @@ class TestGetDailyCoverImage:
         url2, _, _ = _get_daily_cover_image(date2)
         # Same date (different time) should produce the same URL
         assert url1 == url2
+
+    def test_nasa_apod_image_used_when_available(self, mocker):
+        # Mock NASA APOD API to return a successful image response
+        mock_response = mocker.MagicMock()
+        mock_response.status = 200
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = mocker.MagicMock(return_value=False)
+        mock_response.read.return_value = json.dumps({
+            "media_type": "image",
+            "url": "https://apod.nasa.gov/apod/image/2602/TestGalaxy.jpg",
+            "title": "Test Galaxy",
+            "explanation": "A beautiful galaxy far away in the universe.",
+        }).encode()
+        mocker.patch("collector.request.urlopen", return_value=mock_response)
+
+        date = datetime(2026, 2, 24, tzinfo=timezone.utc)
+        url, attribution, description = _get_daily_cover_image(date)
+
+        assert url == "https://apod.nasa.gov/apod/image/2602/TestGalaxy.jpg"
+        assert "Test Galaxy" in attribution
+        assert "beautiful galaxy" in description
+
+    def test_nasa_apod_video_falls_back_to_picsum(self, mocker):
+        # Mock NASA APOD API to return a video (should fall back to Picsum)
+        mock_response = mocker.MagicMock()
+        mock_response.status = 200
+        mock_response.__enter__ = lambda s: s
+        mock_response.__exit__ = mocker.MagicMock(return_value=False)
+        mock_response.read.return_value = json.dumps({
+            "media_type": "video",
+            "url": "https://www.youtube.com/watch?v=test",
+            "title": "Test Video",
+        }).encode()
+        mocker.patch("collector.request.urlopen", return_value=mock_response)
+
+        date = datetime(2026, 2, 24, tzinfo=timezone.utc)
+        url, attribution, description = _get_daily_cover_image(date)
+
+        assert "picsum" in url.lower()
+        assert "2026-02-24" in url
+
+
+# ---------------------------------------------------------------------------
+# Chinese detection and translation helpers
+# ---------------------------------------------------------------------------
+
+class TestIsChinese:
+    def test_all_chinese(self):
+        assert _is_chinese("这是中文文本") is True
+
+    def test_all_english(self):
+        assert _is_chinese("This is English text") is False
+
+    def test_empty_string(self):
+        assert _is_chinese("") is False
+
+    def test_mixed_mostly_chinese(self):
+        # More than 30% Chinese characters → True
+        assert _is_chinese("这是中文文本 english") is True
+
+    def test_mixed_mostly_english(self):
+        # Less than 30% Chinese characters → False
+        assert _is_chinese("This is mostly English with 一点 Chinese") is False
+
+
+class TestTranslateToChinese:
+    def test_translates_english_text(self, mocker):
+        mock_translator = mocker.MagicMock()
+        mock_result = mocker.MagicMock()
+        mock_result.text = "人工智能新闻"
+        mock_translator.translate.return_value = mock_result
+
+        result = _translate_to_chinese("Artificial Intelligence News", mock_translator)
+
+        assert result == "人工智能新闻"
+        mock_translator.translate.assert_called_once_with(
+            "Artificial Intelligence News", dest='zh-cn'
+        )
+
+    def test_skips_chinese_text(self, mocker):
+        mock_translator = mocker.MagicMock()
+        result = _translate_to_chinese("这已经是中文", mock_translator)
+        assert result == ""
+        mock_translator.translate.assert_not_called()
+
+    def test_empty_text_returns_empty(self, mocker):
+        mock_translator = mocker.MagicMock()
+        result = _translate_to_chinese("", mock_translator)
+        assert result == ""
+        mock_translator.translate.assert_not_called()
+
+    def test_returns_empty_on_error(self, mocker):
+        mock_translator = mocker.MagicMock()
+        mock_translator.translate.side_effect = Exception("Network error")
+        result = _translate_to_chinese("Hello world", mock_translator)
+        assert result == ""
+
+    def test_returns_empty_when_result_is_none(self, mocker):
+        mock_translator = mocker.MagicMock()
+        mock_translator.translate.return_value = None
+        result = _translate_to_chinese("Hello world", mock_translator)
+        assert result == ""
 
 
 # ---------------------------------------------------------------------------
@@ -379,6 +484,46 @@ class TestGenerateMarkdown:
         # Should not produce a broken markdown link
         assert "[No link article]()" not in md
         assert "No link article" in md
+
+    def test_translation_included_when_translator_provided(self, mocker):
+        mock_translator = mocker.MagicMock()
+        mock_result = mocker.MagicMock()
+        mock_result.text = "测试文章标题"
+        mock_translator.translate.return_value = mock_result
+
+        news = {
+            "Test Source": {
+                "articles": [
+                    {
+                        "title": "Test Article Title",
+                        "link": "https://example.com",
+                        "summary": "Test summary content here.",
+                        "published": "",
+                    }
+                ],
+                "categories": ["technology"]
+            }
+        }
+        md = generate_markdown(FIXED_DATE, news, translator=mock_translator)
+        assert "📖 中文翻译" in md
+        assert "测试文章标题" in md
+
+    def test_no_translation_without_translator(self):
+        news = {
+            "Test Source": {
+                "articles": [
+                    {
+                        "title": "Test Article Title",
+                        "link": "https://example.com",
+                        "summary": "Test summary content here.",
+                        "published": "",
+                    }
+                ],
+                "categories": ["technology"]
+            }
+        }
+        md = generate_markdown(FIXED_DATE, news, translator=None)
+        assert "📖 中文翻译" not in md
 
 
 # ---------------------------------------------------------------------------
