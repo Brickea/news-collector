@@ -11,7 +11,8 @@ title: 📰 March 2026 Archive
 
 ## 📅 Digests
 
-- [2026-03-19](../../../2026-03-19.html) - Thursday
+- [2026-03-20](../../../2026-03-20.html) - Friday
+- [2026-03-19](2026-03-19.html) - Thursday
 - [2026-03-18](2026-03-18.html) - Wednesday
 - [2026-03-17](2026-03-17.html) - Tuesday
 - [2026-03-16](2026-03-16.html) - Monday
