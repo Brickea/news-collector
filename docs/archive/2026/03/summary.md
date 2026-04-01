@@ -379,7 +379,7 @@ title: 📊 March 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-03-31](../../../2026-03-31.html) - Tuesday
+### [2026-03-31](../04/2026-03-31.html) - Tuesday
 
 **75 articles** collected from:
 
