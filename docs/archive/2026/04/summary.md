@@ -11,40 +11,40 @@ title: 📊 April 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 11
-- **Total Articles**: 808
+- **Total Days**: 12
+- **Total Articles**: 883
 - **Average Articles per Day**: 73
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 325
+- **Articles**: 355
 - **Sources**: AI News, Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 214
+- **Articles**: 234
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 💼 Business & Finance
 
-- **Articles**: 90
+- **Articles**: 95
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🌍 World News
 
-- **Articles**: 75
+- **Articles**: 85
 - **Sources**: BBC News, CNN Top Stories
 
 ### 🏥 Health
 
-- **Articles**: 55
+- **Articles**: 60
 - **Sources**: WHO News
 
 ### 🔭 Science
 
-- **Articles**: 49
+- **Articles**: 54
 - **Sources**: NASA Breaking News
 
 ## 📅 Daily Summaries
@@ -158,7 +158,7 @@ title: 📊 April 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 
-### [2026-04-11](../../../2026-04-11.html) - Saturday
+### [2026-04-11](2026-04-11.html) - Saturday
 
 **74 articles** collected from:
 
@@ -168,6 +168,17 @@ title: 📊 April 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 - 🔭 Science: 4 articles
+
+### [2026-04-12](../../../2026-04-12.html) - Sunday
+
+**75 articles** collected from:
+
+- 🔬 Technology & AI: 30 articles
+- 💻 Coding & Development: 20 articles
+- 💼 Business & Finance: 5 articles
+- 🌍 World News: 10 articles
+- 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
 
 ---
 
