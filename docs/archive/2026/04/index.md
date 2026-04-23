@@ -11,7 +11,8 @@ title: 📰 April 2026 Archive
 
 ## 📅 Digests
 
-- [2026-04-22](../../../2026-04-22.html) - Wednesday
+- [2026-04-23](../../../2026-04-23.html) - Thursday
+- [2026-04-22](2026-04-22.html) - Wednesday
 - [2026-04-21](2026-04-21.html) - Tuesday
 - [2026-04-20](2026-04-20.html) - Monday
 - [2026-04-19](2026-04-19.html) - Sunday
