@@ -365,7 +365,7 @@ title: 📊 April 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 
-### [2026-04-30](../../../2026-04-30.html) - Thursday
+### [2026-04-30](../05/2026-04-30.html) - Thursday
 
 **70 articles** collected from:
 
