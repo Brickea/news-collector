@@ -11,7 +11,8 @@ title: 📰 May 2026 Archive
 
 ## 📅 Digests
 
-- [2026-05-23](../../../2026-05-23.html) - Saturday
+- [2026-05-24](../../../2026-05-24.html) - Sunday
+- [2026-05-23](2026-05-23.html) - Saturday
 - [2026-05-22](2026-05-22.html) - Friday
 - [2026-05-21](2026-05-21.html) - Thursday
 - [2026-05-20](2026-05-20.html) - Wednesday
