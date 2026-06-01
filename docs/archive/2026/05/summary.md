@@ -376,7 +376,7 @@ title: 📊 May 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-05-31](../../../2026-05-31.html) - Sunday
+### [2026-05-31](../06/2026-05-31.html) - Sunday
 
 **70 articles** collected from:
 
