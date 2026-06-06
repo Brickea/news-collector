@@ -11,35 +11,35 @@ title: 📊 June 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 5
-- **Total Articles**: 340
+- **Total Days**: 6
+- **Total Articles**: 410
 - **Average Articles per Day**: 68
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 130
+- **Articles**: 160
 - **Sources**: AI News, Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 90
+- **Articles**: 110
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 🌍 World News
 
-- **Articles**: 45
+- **Articles**: 50
 - **Sources**: BBC News, CNN Top Stories
 
 ### 💼 Business & Finance
 
-- **Articles**: 30
+- **Articles**: 40
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🏥 Health
 
-- **Articles**: 25
+- **Articles**: 30
 - **Sources**: WHO News
 
 ### 🔭 Science
@@ -92,7 +92,7 @@ title: 📊 June 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-06-05](../../../2026-06-05.html) - Friday
+### [2026-06-05](2026-06-05.html) - Friday
 
 **70 articles** collected from:
 
@@ -102,6 +102,16 @@ title: 📊 June 2026 Summary
 - 🌍 World News: 10 articles
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
+
+### [2026-06-06](../../../2026-06-06.html) - Saturday
+
+**70 articles** collected from:
+
+- 🔬 Technology & AI: 30 articles
+- 💻 Coding & Development: 20 articles
+- 💼 Business & Finance: 10 articles
+- 🌍 World News: 5 articles
+- 🏥 Health: 5 articles
 
 ---
 
