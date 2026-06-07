@@ -11,7 +11,8 @@ title: 📰 June 2026 Archive
 
 ## 📅 Digests
 
-- [2026-06-06](../../../2026-06-06.html) - Saturday
+- [2026-06-07](../../../2026-06-07.html) - Sunday
+- [2026-06-06](2026-06-06.html) - Saturday
 - [2026-06-05](2026-06-05.html) - Friday
 - [2026-06-04](2026-06-04.html) - Thursday
 - [2026-06-03](2026-06-03.html) - Wednesday
