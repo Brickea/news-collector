@@ -11,7 +11,7 @@ title: 📊 News Summaries
 
 ## 📅 Available Summaries
 
-- [June 2026](../2026/06/summary.html) - 10 digests
+- [June 2026](../2026/06/summary.html) - 11 digests
 - [May 2026](../2026/05/summary.html) - 31 digests
 - [April 2026](../2026/04/summary.html) - 30 digests
 - [March 2026](../2026/03/summary.html) - 31 digests
