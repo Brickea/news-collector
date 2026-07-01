@@ -358,7 +358,7 @@ title: 📊 June 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 
-### [2026-06-30](../../../2026-06-30.html) - Tuesday
+### [2026-06-30](../07/2026-06-30.html) - Tuesday
 
 **65 articles** collected from:
 
