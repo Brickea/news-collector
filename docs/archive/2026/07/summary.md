@@ -11,45 +11,45 @@ title: 📊 July 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 1
-- **Total Articles**: 75
-- **Average Articles per Day**: 75
+- **Total Days**: 2
+- **Total Articles**: 145
+- **Average Articles per Day**: 72
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 30
+- **Articles**: 60
 - **Sources**: AI News, Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 20
+- **Articles**: 40
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 💼 Business & Finance
 
-- **Articles**: 10
+- **Articles**: 15
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🌍 World News
 
-- **Articles**: 5
-- **Sources**: BBC News
+- **Articles**: 15
+- **Sources**: BBC News, CNN Top Stories
+
+### 🔭 Science
+
+- **Articles**: 10
+- **Sources**: NASA Breaking News
 
 ### 🏥 Health
 
 - **Articles**: 5
 - **Sources**: WHO News
 
-### 🔭 Science
-
-- **Articles**: 5
-- **Sources**: NASA Breaking News
-
 ## 📅 Daily Summaries
 
-### [2026-07-01](../../../2026-07-01.html) - Wednesday
+### [2026-07-01](2026-07-01.html) - Wednesday
 
 **75 articles** collected from:
 
@@ -58,6 +58,16 @@ title: 📊 July 2026 Summary
 - 💼 Business & Finance: 10 articles
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
+
+### [2026-07-02](../../../2026-07-02.html) - Thursday
+
+**70 articles** collected from:
+
+- 🔬 Technology & AI: 30 articles
+- 💻 Coding & Development: 20 articles
+- 💼 Business & Finance: 5 articles
+- 🌍 World News: 10 articles
 - 🔭 Science: 5 articles
 
 ---
