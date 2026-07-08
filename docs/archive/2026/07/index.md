@@ -11,7 +11,8 @@ title: 📰 July 2026 Archive
 
 ## 📅 Digests
 
-- [2026-07-07](../../../2026-07-07.html) - Tuesday
+- [2026-07-08](../../../2026-07-08.html) - Wednesday
+- [2026-07-07](2026-07-07.html) - Tuesday
 - [2026-07-06](2026-07-06.html) - Monday
 - [2026-07-05](2026-07-05.html) - Sunday
 - [2026-07-04](2026-07-04.html) - Saturday
