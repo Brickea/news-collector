@@ -365,7 +365,7 @@ title: 📊 July 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-07-31](../../../2026-07-31.html) - Friday
+### [2026-07-31](../08/2026-07-31.html) - Friday
 
 **75 articles** collected from:
 
