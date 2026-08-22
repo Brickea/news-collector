@@ -11,7 +11,8 @@ title: 📰 August 2026 Archive
 
 ## 📅 Digests
 
-- [2026-08-21](../../../2026-08-21.html) - Friday
+- [2026-08-22](../../../2026-08-22.html) - Saturday
+- [2026-08-21](2026-08-21.html) - Friday
 - [2026-08-20](2026-08-20.html) - Thursday
 - [2026-08-19](2026-08-19.html) - Wednesday
 - [2026-08-18](2026-08-18.html) - Tuesday
