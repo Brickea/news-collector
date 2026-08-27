@@ -11,40 +11,40 @@ title: 📊 August 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 26
-- **Total Articles**: 1800
+- **Total Days**: 27
+- **Total Articles**: 1870
 - **Average Articles per Day**: 69
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 705
+- **Articles**: 730
 - **Sources**: AI News, Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 500
+- **Articles**: 520
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 💼 Business & Finance
 
-- **Articles**: 205
+- **Articles**: 210
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🌍 World News
 
-- **Articles**: 185
+- **Articles**: 195
 - **Sources**: BBC News, CNN Top Stories
 
 ### 🏥 Health
 
-- **Articles**: 130
+- **Articles**: 135
 - **Sources**: WHO News
 
 ### 🔭 Science
 
-- **Articles**: 75
+- **Articles**: 80
 - **Sources**: NASA Breaking News
 
 ## 📅 Daily Summaries
@@ -314,7 +314,7 @@ title: 📊 August 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-08-26](../../../2026-08-26.html) - Wednesday
+### [2026-08-26](2026-08-26.html) - Wednesday
 
 **65 articles** collected from:
 
@@ -323,6 +323,17 @@ title: 📊 August 2026 Summary
 - 💼 Business & Finance: 10 articles
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
+
+### [2026-08-27](../../../2026-08-27.html) - Thursday
+
+**70 articles** collected from:
+
+- 🔬 Technology & AI: 25 articles
+- 💻 Coding & Development: 20 articles
+- 💼 Business & Finance: 5 articles
+- 🌍 World News: 10 articles
+- 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
 
 ---
 
