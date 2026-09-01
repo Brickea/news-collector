@@ -367,7 +367,7 @@ title: 📊 August 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 
-### [2026-08-31](../../../2026-08-31.html) - Monday
+### [2026-08-31](../09/2026-08-31.html) - Monday
 
 **75 articles** collected from:
 
