@@ -11,7 +11,8 @@ title: 📰 September 2026 Archive
 
 ## 📅 Digests
 
-- [2026-09-21](../../../2026-09-21.html) - Monday
+- [2026-09-22](../../../2026-09-22.html) - Tuesday
+- [2026-09-21](2026-09-21.html) - Monday
 - [2026-09-20](2026-09-20.html) - Sunday
 - [2026-09-19](2026-09-19.html) - Saturday
 - [2026-09-18](2026-09-18.html) - Friday
