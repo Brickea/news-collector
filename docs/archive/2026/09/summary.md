@@ -356,7 +356,7 @@ title: 📊 September 2026 Summary
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
 
-### [2026-09-30](../../../2026-09-30.html) - Wednesday
+### [2026-09-30](../10/2026-09-30.html) - Wednesday
 
 **60 articles** collected from:
 
