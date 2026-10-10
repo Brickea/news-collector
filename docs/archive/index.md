@@ -11,7 +11,7 @@ title: 📰 News Archive
 
 ## 📚 Archive by Period
 
-- [October 2026](2026/10/) - 9 digests
+- [October 2026](2026/10/) - 10 digests
 - [September 2026](2026/09/) - 30 digests
 - [August 2026](2026/08/) - 31 digests
 - [July 2026](2026/07/) - 31 digests
