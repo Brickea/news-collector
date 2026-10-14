@@ -11,40 +11,40 @@ title: 📊 October 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 13
-- **Total Articles**: 820
+- **Total Days**: 14
+- **Total Articles**: 885
 - **Average Articles per Day**: 63
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 260
+- **Articles**: 280
 - **Sources**: Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 255
+- **Articles**: 275
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 🌍 World News
 
-- **Articles**: 105
+- **Articles**: 115
 - **Sources**: BBC News, CNN Top Stories
 
 ### 💼 Business & Finance
 
-- **Articles**: 90
+- **Articles**: 95
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🏥 Health
 
-- **Articles**: 65
+- **Articles**: 70
 - **Sources**: WHO News
 
 ### 🔭 Science
 
-- **Articles**: 45
+- **Articles**: 50
 - **Sources**: NASA Breaking News
 
 ## 📅 Daily Summaries
@@ -177,12 +177,23 @@ title: 📊 October 2026 Summary
 - 🌍 World News: 10 articles
 - 🏥 Health: 5 articles
 
-### [2026-10-13](../../../2026-10-13.html) - Tuesday
+### [2026-10-13](2026-10-13.html) - Tuesday
 
 **60 articles** collected from:
 
 - 🔬 Technology & AI: 20 articles
 - 💻 Coding & Development: 15 articles
+- 💼 Business & Finance: 5 articles
+- 🌍 World News: 10 articles
+- 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
+
+### [2026-10-14](../../../2026-10-14.html) - Wednesday
+
+**65 articles** collected from:
+
+- 🔬 Technology & AI: 20 articles
+- 💻 Coding & Development: 20 articles
 - 💼 Business & Finance: 5 articles
 - 🌍 World News: 10 articles
 - 🏥 Health: 5 articles
