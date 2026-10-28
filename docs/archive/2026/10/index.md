@@ -11,7 +11,8 @@ title: 📰 October 2026 Archive
 
 ## 📅 Digests
 
-- [2026-10-27](../../../2026-10-27.html) - Tuesday
+- [2026-10-28](../../../2026-10-28.html) - Wednesday
+- [2026-10-27](2026-10-27.html) - Tuesday
 - [2026-10-26](2026-10-26.html) - Monday
 - [2026-10-25](2026-10-25.html) - Sunday
 - [2026-10-24](2026-10-24.html) - Saturday
