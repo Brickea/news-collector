@@ -370,7 +370,7 @@ title: 📊 October 2026 Summary
 - 🌍 World News: 10 articles
 - 🏥 Health: 5 articles
 
-### [2026-10-31](../../../2026-10-31.html) - Saturday
+### [2026-10-31](../11/2026-10-31.html) - Saturday
 
 **65 articles** collected from:
 
