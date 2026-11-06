@@ -11,7 +11,8 @@ title: 📰 November 2026 Archive
 
 ## 📅 Digests
 
-- [2026-11-05](../../../2026-11-05.html) - Thursday
+- [2026-11-06](../../../2026-11-06.html) - Friday
+- [2026-11-05](2026-11-05.html) - Thursday
 - [2026-11-04](2026-11-04.html) - Wednesday
 - [2026-11-03](2026-11-03.html) - Tuesday
 - [2026-11-02](2026-11-02.html) - Monday
