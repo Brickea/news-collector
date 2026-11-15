@@ -11,40 +11,40 @@ title: 📊 November 2026 Summary
 
 ## 📈 Overview
 
-- **Total Days**: 14
-- **Total Articles**: 884
+- **Total Days**: 15
+- **Total Articles**: 949
 - **Average Articles per Day**: 63
 
 ## 📊 Category Breakdown
 
 ### 🔬 Technology & AI
 
-- **Articles**: 280
+- **Articles**: 300
 - **Sources**: Hacker News (Top), MIT Technology Review AI, TechCrunch, The Verge
 
 ### 💻 Coding & Development
 
-- **Articles**: 279
+- **Articles**: 299
 - **Sources**: CSS-Tricks, Dev.to, GitHub Trending, Stack Overflow Blog
 
 ### 🌍 World News
 
-- **Articles**: 110
+- **Articles**: 120
 - **Sources**: BBC News, CNN Top Stories
 
 ### 💼 Business & Finance
 
-- **Articles**: 100
+- **Articles**: 105
 - **Sources**: CNN Top Stories, Financial Times
 
 ### 🏥 Health
 
-- **Articles**: 70
+- **Articles**: 75
 - **Sources**: WHO News
 
 ### 🔭 Science
 
-- **Articles**: 45
+- **Articles**: 50
 - **Sources**: NASA Breaking News
 
 ## 📅 Daily Summaries
@@ -188,7 +188,7 @@ title: 📊 November 2026 Summary
 - 🏥 Health: 5 articles
 - 🔭 Science: 5 articles
 
-### [2026-11-14](../../../2026-11-14.html) - Saturday
+### [2026-11-14](2026-11-14.html) - Saturday
 
 **60 articles** collected from:
 
@@ -197,6 +197,17 @@ title: 📊 November 2026 Summary
 - 💼 Business & Finance: 10 articles
 - 🌍 World News: 5 articles
 - 🏥 Health: 5 articles
+
+### [2026-11-15](../../../2026-11-15.html) - Sunday
+
+**65 articles** collected from:
+
+- 🔬 Technology & AI: 20 articles
+- 💻 Coding & Development: 20 articles
+- 💼 Business & Finance: 5 articles
+- 🌍 World News: 10 articles
+- 🏥 Health: 5 articles
+- 🔭 Science: 5 articles
 
 ---
 
